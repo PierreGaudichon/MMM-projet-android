@@ -1,8 +1,17 @@
 package fr.istic.fds;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -34,14 +43,25 @@ public class MainActivity extends AppCompatActivity {
         public String datasetid;
         public String recordid;
         public Date record_timestamp;
+    }
 
-        @Override
-        public String toString() {
-            return "Data{" +
-                    "datasetid='" + datasetid + '\'' +
-                    ", recordid='" + recordid + '\'' +
-                    ", record_timestamp=" + record_timestamp +
-                    '}';
+    public class DataListAdapter extends ArrayAdapter<Data> {
+        private Context ctx;
+        private List<Data> list;
+        public DataListAdapter(Context ctx, List<Data> list) {
+            super(ctx, R.layout.item, list);
+            this.ctx = ctx;
+            this.list = list;
+        }
+        public View getView(int pos, View view, ViewGroup parent) {
+            if(view == null) {
+                LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.item, parent, false);
+            }
+            Data data = list.get(pos);
+            ((TextView) view.findViewById(R.id.item_title)).setText(data.datasetid);
+            ((TextView) view.findViewById(R.id.item_date)).setText(data.record_timestamp.toString());
+            return view;
         }
     }
 
@@ -50,17 +70,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View list = findViewById(R.id.list_main);
+        ListView list = (ListView) findViewById(R.id.list_main);
+        View item = findViewById(R.id.item_layout);
 
         Gson gson = new Gson();
-        Data[] test = gson.fromJson(loadJSONFromAsset(), Data[].class);
-        System.out.println("---");
-        for(Data t : test) {
-            System.out.println(t.toString());
-        }
-        System.out.println(test[0]);
-        System.out.println("---");
-
-
+        List<Data> test = Arrays.asList(gson.fromJson(loadJSONFromAsset(), Data[].class));
+        ListAdapter adapter = new DataListAdapter(this, test);
+        list.setAdapter(adapter);
     }
 }
