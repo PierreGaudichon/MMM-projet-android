@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         public String datasetid;
         public String recordid;
         public Date record_timestamp;
+        public Fields fields;
+        public class Fields {
+            public String titre_fr;
+            public String description_fr;
+        }
     }
 
     public class DataListAdapter extends ArrayAdapter<Data> {
@@ -59,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 view = inflater.inflate(R.layout.item, parent, false);
             }
             Data data = list.get(pos);
-            ((TextView) view.findViewById(R.id.item_title)).setText(data.datasetid);
-            ((TextView) view.findViewById(R.id.item_date)).setText(data.record_timestamp.toString());
+            ((TextView) view.findViewById(R.id.item_title)).setText(data.fields.titre_fr);
+            ((TextView) view.findViewById(R.id.item_description)).setText(data.fields.description_fr);
             return view;
         }
     }
