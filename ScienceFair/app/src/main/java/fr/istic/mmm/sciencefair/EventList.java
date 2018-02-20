@@ -19,6 +19,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import fr.istic.mmm.sciencefair.data.Data;
+import fr.istic.mmm.sciencefair.data.DataListAdapter;
+
 public class EventList extends AppCompatActivity {
 
     public String loadJSONFromAsset() {
@@ -37,37 +40,6 @@ public class EventList extends AppCompatActivity {
         return json;
     }
 
-    public class Data {
-        public String datasetid;
-        public String recordid;
-        public Date record_timestamp;
-        public EventList.Data.Fields fields;
-        public class Fields {
-            public String titre_fr;
-            public String description_fr;
-        }
-    }
-
-    public class DataListAdapter extends ArrayAdapter<EventList.Data> {
-        private Context ctx;
-        private List<EventList.Data> list;
-        public DataListAdapter(Context ctx, List<EventList.Data> list) {
-            super(ctx, R.layout.item, list);
-            this.ctx = ctx;
-            this.list = list;
-        }
-        public View getView(int pos, View view, ViewGroup parent) {
-            if(view == null) {
-                LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.item, parent, false);
-            }
-            EventList.Data data = list.get(pos);
-            ((TextView) view.findViewById(R.id.item_title)).setText(data.fields.titre_fr);
-            ((TextView) view.findViewById(R.id.item_description)).setText(data.fields.description_fr);
-            return view;
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +49,8 @@ public class EventList extends AppCompatActivity {
         View item = findViewById(R.id.item_layout);
 
         Gson gson = new Gson();
-        List<EventList.Data> test = Arrays.asList(gson.fromJson(loadJSONFromAsset(), EventList.Data[].class));
-        ListAdapter adapter = new EventList.DataListAdapter(this, test);
+        List<Data> test = Arrays.asList(gson.fromJson(loadJSONFromAsset(), Data[].class));
+        ListAdapter adapter = new DataListAdapter(this, test);
         list.setAdapter(adapter);
     }
 }
