@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:onClick="test">
+    android:onClick="showMap">
 
     <TextView
         android:id="@+id/event_title"
