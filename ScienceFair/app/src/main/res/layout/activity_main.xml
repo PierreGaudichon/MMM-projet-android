@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/main">
 
     <ListView
         android:id="@+id/list_main"
@@ -12,5 +13,9 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         tools:ignore="MissingConstraints" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </android.support.constraint.ConstraintLayout>
