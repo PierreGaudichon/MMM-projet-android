@@ -2,8 +2,6 @@ package fr.istic.mmm.sciencefair.data;
 
 import java.util.Date;
 
-import fr.istic.mmm.sciencefair.EventList;
-
 
 public class Data {
 
