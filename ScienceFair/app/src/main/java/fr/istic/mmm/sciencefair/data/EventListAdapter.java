@@ -17,19 +17,18 @@ public class EventListAdapter extends ArrayAdapter<Event> {
     private List<Event> list;
 
     public EventListAdapter(Context ctx, List<Event> list) {
-        super(ctx, R.layout.item, list);
+        super(ctx, R.layout.fragment_event_details, list);
         this.ctx = ctx;
         this.list = list;
     }
 
     public View getView(int pos, View view, ViewGroup parent) {
         if(view == null) {
-            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.item, parent, false);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_event_list_item, parent, false);
         }
-        Event data = list.get(pos);
-        ((TextView) view.findViewById(R.id.item_title)).setText(data.fields.titre_fr);
-        ((TextView) view.findViewById(R.id.item_description)).setText(data.fields.description_fr);
+        Event event = list.get(pos);
+        ((TextView) view.findViewById(R.id.titre)).setText(event.fields.titre_fr);
+        ((TextView) view.findViewById(R.id.description)).setText(event.fields.description_fr);
         return view;
     }
 
