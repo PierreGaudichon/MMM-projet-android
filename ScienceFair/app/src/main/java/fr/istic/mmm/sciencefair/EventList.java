@@ -24,11 +24,11 @@ public class EventList extends AppCompatActivity {
     public String loadJSONFromAsset() {
         String json = null;
         try {
-            InputStream is = getAssets().open("fr-esr-fete-de-la-science-17.small.json");
-            int size = is.available();
+            InputStream stream = getAssets().open("fr-esr-fete-de-la-science-17.small.json");
+            int size = stream.available();
             byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
+            stream.read(buffer);
+            stream.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
             ex.printStackTrace();
