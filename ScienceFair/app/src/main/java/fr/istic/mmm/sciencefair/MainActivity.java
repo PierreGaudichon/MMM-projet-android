@@ -22,7 +22,7 @@ import java.util.List;
 import fr.istic.mmm.sciencefair.data.Data;
 import fr.istic.mmm.sciencefair.data.DataListAdapter;
 
-public class EventList extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     public String loadJSONFromAsset() {
         String json = null;

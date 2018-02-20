@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import fr.istic.mmm.sciencefair.EventList;
 import fr.istic.mmm.sciencefair.R;
 
 public class DataListAdapter extends ArrayAdapter<Data> {
