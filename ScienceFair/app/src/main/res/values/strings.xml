@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ScienceFair</string>
+    <string name="title_activity_science_fair_map">Science Fair Map</string>
 </resources>
