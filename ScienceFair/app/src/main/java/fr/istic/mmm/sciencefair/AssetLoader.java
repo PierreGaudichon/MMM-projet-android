@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import fr.istic.mmm.sciencefair.data.Data;
+import fr.istic.mmm.sciencefair.data.Event;
 
 public class AssetLoader {
 
@@ -38,8 +38,8 @@ public class AssetLoader {
         return json;
     }
 
-    public List<Data> loadData(String path) {
-        return Arrays.asList(gson.fromJson(loadString(path), Data[].class));
+    public List<Event> loadData(String path) {
+        return Arrays.asList(gson.fromJson(loadString(path), Event[].class));
     }
 
 }

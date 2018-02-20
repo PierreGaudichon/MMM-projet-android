@@ -11,12 +11,12 @@ import java.util.List;
 
 import fr.istic.mmm.sciencefair.R;
 
-public class DataListAdapter extends ArrayAdapter<Data> {
+public class EventListAdapter extends ArrayAdapter<Event> {
 
     private Context ctx;
-    private List<Data> list;
+    private List<Event> list;
 
-    public DataListAdapter(Context ctx, List<Data> list) {
+    public EventListAdapter(Context ctx, List<Event> list) {
         super(ctx, R.layout.item, list);
         this.ctx = ctx;
         this.list = list;
@@ -27,7 +27,7 @@ public class DataListAdapter extends ArrayAdapter<Data> {
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.item, parent, false);
         }
-        Data data = list.get(pos);
+        Event data = list.get(pos);
         ((TextView) view.findViewById(R.id.item_title)).setText(data.fields.titre_fr);
         ((TextView) view.findViewById(R.id.item_description)).setText(data.fields.description_fr);
         return view;

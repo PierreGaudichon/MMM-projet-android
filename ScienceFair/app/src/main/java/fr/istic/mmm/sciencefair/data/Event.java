@@ -3,12 +3,12 @@ package fr.istic.mmm.sciencefair.data;
 import java.util.Date;
 
 
-public class Data {
+public class Event {
 
     public String datasetid;
     public String recordid;
     public Date record_timestamp;
-    public Data.Fields fields;
+    public Event.Fields fields;
 
     public class Fields {
         public String titre_fr;

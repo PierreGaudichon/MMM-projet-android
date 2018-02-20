@@ -9,8 +9,8 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import fr.istic.mmm.sciencefair.data.Data;
-import fr.istic.mmm.sciencefair.data.DataListAdapter;
+import fr.istic.mmm.sciencefair.data.Event;
+import fr.istic.mmm.sciencefair.data.EventListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         ListView list = (ListView) findViewById(R.id.list_main);
         View item = findViewById(R.id.item_layout);
 
-        List<Data> test = loader.loadData(AssetLoader.SMALL);
-        ListAdapter adapter = new DataListAdapter(this, test);
+        List<Event> test = loader.loadData(AssetLoader.SMALL);
+        ListAdapter adapter = new EventListAdapter(this, test);
         list.setAdapter(adapter);
     }
 
