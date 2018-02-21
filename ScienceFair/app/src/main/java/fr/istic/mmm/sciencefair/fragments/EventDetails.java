@@ -37,10 +37,11 @@ public class EventDetails extends Fragment implements View.OnClickListener {
     }
 
     private void share() {
+        String name = getResources().getString(R.string.app_name);
+        String subject = name + " : " + event.fields.titre_fr;
+        String body = subject + "\n" + event.fields.lien;
         Intent intent = new Intent(android.content.Intent.ACTION_SEND);
         intent.setType("text/plain");
-        String subject = "ScienceFair : " + event.fields.titre_fr;
-        String body = subject + "\n" + event.fields.lien;
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
         startActivity(Intent.createChooser(intent, "Share using"));

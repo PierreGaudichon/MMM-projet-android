@@ -5,6 +5,8 @@ import android.app.FragmentManager;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
@@ -14,8 +16,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     private FirebaseAnalytics mFirebaseAnalytics;
     private AssetLoader assetLoader;
     private GoogleMap mMap;
@@ -32,6 +35,9 @@ public class MainActivity extends Activity {
 
         assetLoader = new AssetLoader(getAssets(), AssetLoader.MEDIUM);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
 
         eventList = new EventList();
         eventDetails = new EventDetails();
