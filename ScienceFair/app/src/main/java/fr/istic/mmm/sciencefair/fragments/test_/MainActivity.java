@@ -1,4 +1,3 @@
-/*
 package fr.istic.mmm.sciencefair;
 
 import android.app.Activity;
@@ -22,18 +21,14 @@ import fr.istic.mmm.sciencefair.data.Event;
 import fr.istic.mmm.sciencefair.data.EventListAdapter;
 import fr.istic.mmm.sciencefair.fragments.test_.ArticleFragment;
 import fr.istic.mmm.sciencefair.fragments.test_.HeadlinesFragment;
-*/
 /*public class MainActivity extends Activity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
-    private MapFragment mMapFragment;*//*
-
+    private MapFragment mMapFragment;*/
 
 public class MainActivity extends FragmentActivity
         implements HeadlinesFragment.OnHeadlineSelectedListener {
-    */
-/** Called when the activity is first created. *//*
-
+    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +90,7 @@ public class MainActivity extends FragmentActivity
             transaction.commit();
         }
     }
-    */
-/*
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,7 +137,5 @@ public class MainActivity extends FragmentActivity
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         System.out.println("sydney = " + sydney);
-    }*//*
-
+    }*/
 }
-*/
