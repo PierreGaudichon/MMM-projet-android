@@ -94,6 +94,7 @@ public class MainActivity extends Activity {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.main, mMapFragment);
         mMapFragment.getMapAsync(eventList);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 

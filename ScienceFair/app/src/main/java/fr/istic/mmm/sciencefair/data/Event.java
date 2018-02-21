@@ -24,7 +24,6 @@ public class Event implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        // Add a marker in Sydney and move the camera
         LatLng location = new LatLng(fields.geolocalisation[0], fields.geolocalisation[1]);
         googleMap.addMarker(new MarkerOptions().position(location).title(fields.titre_fr));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
