@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.List;
 
 import fr.istic.mmm.sciencefair.AssetLoader;
@@ -26,6 +28,8 @@ public class EventDetails extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_event_details, container, false);
         activity = ((MainActivity) getActivity());
+        view.findViewById(R.id.event_score).setOnClickListener(this);
+        //Firebase
         return view;
     }
 
@@ -45,5 +49,21 @@ public class EventDetails extends Fragment {
         intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
         startActivity(Intent.createChooser(intent, "Share using"));
     }
+    //Firebase
+    public void logEvent(View view){
+        String id = "" + view.getId() ;
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
 
+        // Inserer un champ text pour que l'utilisateur rentre une note autre que 5
+        bundle.putLong(FirebaseAnalytics.Param.SCORE, 5);
+
+        activity.getmFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.POST_SCORE, bundle);
+    }
+    @Override
+
+    public void onClick(View view) {
+        //Firebase
+        if(view.getId() == R.id.event_score) { logEvent(view); }
+    }
 }
