@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
@@ -46,11 +47,19 @@ public class EventList extends Fragment implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
         for(Event event : events){
             if(event.fields.geolocalisation != null) {
                 LatLng location = new LatLng(event.fields.geolocalisation[0], event.fields.geolocalisation[1]);
-                googleMap.addMarker(new MarkerOptions().position(location).title(event.fields.titre_fr));
+                Marker marker = googleMap.addMarker(new MarkerOptions().position(location).title(event.fields.titre_fr));
+                builder.include(marker.getPosition());
             }
         }
+
+        LatLngBounds bounds = builder.build();
+        int padding = 50; // offset from edges of the map in pixels
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        googleMap.moveCamera(cu);
     }
 }
