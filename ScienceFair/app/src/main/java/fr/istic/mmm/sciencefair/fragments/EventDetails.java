@@ -18,7 +18,7 @@ import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class EventDetails extends Fragment {
+public class EventDetails extends Fragment implements View.OnClickListener {
 
     private View view;
     private MainActivity activity;

@@ -1,24 +1,24 @@
 package fr.istic.mmm.sciencefair;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-
-import fr.istic.mmm.sciencefair.fragments.EventDetails;
-import fr.istic.mmm.sciencefair.fragments.EventList;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import fr.istic.mmm.sciencefair.fragments.EventDetails;
+import fr.istic.mmm.sciencefair.fragments.EventList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar, menu);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        //SearchView searchView = (SearchView) menu.findItem(R.id.toolbar_search).getActionView();
+        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
         return true;
     }
 
