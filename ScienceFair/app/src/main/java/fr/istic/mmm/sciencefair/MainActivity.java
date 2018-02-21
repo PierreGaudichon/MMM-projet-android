@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
         manager = getFragmentManager();
         setContentView(R.layout.activity_main);
 
-        assetLoader = new AssetLoader(getAssets(), AssetLoader.BIG);
+        assetLoader = new AssetLoader(getAssets(), AssetLoader.MEDIUM);
 
         System.out.println("new EventList");
         eventList = new EventList();

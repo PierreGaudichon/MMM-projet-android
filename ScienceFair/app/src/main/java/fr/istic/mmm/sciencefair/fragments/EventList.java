@@ -47,8 +47,10 @@ public class EventList extends Fragment implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
         for(Event event : events){
-            LatLng location = new LatLng(event.fields.geolocalisation[0], event.fields.geolocalisation[1]);
-            googleMap.addMarker(new MarkerOptions().position(location).title(event.fields.titre_fr));
+            if(event.fields.geolocalisation != null) {
+                LatLng location = new LatLng(event.fields.geolocalisation[0], event.fields.geolocalisation[1]);
+                googleMap.addMarker(new MarkerOptions().position(location).title(event.fields.titre_fr));
+            }
         }
     }
 }
