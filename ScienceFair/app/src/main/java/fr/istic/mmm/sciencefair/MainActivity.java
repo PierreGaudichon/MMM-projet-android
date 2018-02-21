@@ -48,16 +48,19 @@ public class MainActivity extends AppCompatActivity {
         mMapFragment = MapFragment.newInstance();
 
         showEventList();
-        logEvent();
+        /*logEvent(eventDetails.getView());*/
     }
 
-    public void logEvent(){
-        Bundle bundle = new Bundle();
-        /*bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);*/
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    public FirebaseAnalytics getmFirebaseAnalytics(){
+        return mFirebaseAnalytics;
     }
+/*    public void logEvent(View view){
+        String id = "" + view.getId() ;
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putLong(FirebaseAnalytics.Param.SCORE, 5);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.POST_SCORE, bundle);
+    }*/
 
     public void showEventList() {
         isSharable = false;
