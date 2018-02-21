@@ -14,12 +14,14 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends Activity implements OnMapReadyCallback {
 
+    private FirebaseAnalytics mFirebaseAnalytics;
     private AssetLoader assetLoader;
-
     private GoogleMap mMap;
+
     private FragmentManager manager;
     private MapFragment mMapFragment;
     private EventList eventList;
@@ -39,8 +41,12 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         System.out.println("new EventDetail");
         eventDetails = new EventDetails();
 
-        setEventList();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+
+
+        setEventList();
+        logEvent();
         /*
         ListView list = (ListView) findViewById(R.id.list_main);
         ListView list = findViewById(R.id.list_main);
@@ -50,6 +56,14 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         ListAdapter adapter = new EventListAdapter(this, test);
         list.setAdapter(adapter);
         */
+    }
+
+    public void logEvent(){
+        Bundle bundle = new Bundle();
+        /*bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);*/
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     public void setEventList() {
