@@ -1,10 +1,15 @@
 package fr.istic.mmm.sciencefair.data;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.Date;
-import java.util.List;
 
 
-public class Event {
+public class Event implements OnMapReadyCallback{
 
     public String datasetid;
     public String recordid;
@@ -14,7 +19,14 @@ public class Event {
     public class Fields {
         public String titre_fr;
         public String description_fr;
-        public List<Double> geolocalisation;
+        public double[] geolocalisation;
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        // Add a marker in Sydney and move the camera
+        LatLng location = new LatLng(fields.geolocalisation[0], fields.geolocalisation[1]);
+        googleMap.addMarker(new MarkerOptions().position(location).title(fields.titre_fr));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+    }
 }

@@ -15,8 +15,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import java.util.List;
 
-public class MainActivity extends Activity implements OnMapReadyCallback {
+import fr.istic.mmm.sciencefair.data.Event;
+import fr.istic.mmm.sciencefair.data.EventListAdapter;
+
+public class MainActivity extends Activity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private AssetLoader assetLoader;
@@ -89,7 +93,7 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         }
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.main, mMapFragment);
-        mMapFragment.getMapAsync(this);
+        mMapFragment.getMapAsync(eventList);
         fragmentTransaction.commit();
     }
 
@@ -97,17 +101,6 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.remove(mMapFragment);
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        System.out.println("sydney = " + sydney);
     }
 
     public AssetLoader getAssetLoader() {
