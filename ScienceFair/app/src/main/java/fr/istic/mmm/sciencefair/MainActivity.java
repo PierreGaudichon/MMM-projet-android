@@ -1,5 +1,6 @@
 package fr.istic.mmm.sciencefair;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
@@ -19,7 +20,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
 import fr.istic.mmm.sciencefair.fragments.EventList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity { // AppCompatActivity
 
     private Toolbar toolbar;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         toolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         eventList = new EventList();
         eventDetails = new EventDetails();
