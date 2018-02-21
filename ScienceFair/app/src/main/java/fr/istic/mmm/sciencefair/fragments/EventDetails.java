@@ -21,11 +21,6 @@ public class EventDetails extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("----");
-        System.out.println("----");
-        System.out.println("EventDetail#onCreateView");
-        System.out.println("----");
-        System.out.println("----");
         view = inflater.inflate(R.layout.fragment_event_details, container, false);
         activity = ((MainActivity) getActivity());
         return view;

@@ -77,6 +77,7 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.remove(eventList);
         transaction.add(R.id.fragment_main, eventDetails);
+        transaction.addToBackStack(null);
         transaction.commit();
         manager.executePendingTransactions();
         eventDetails.setPos(pos);
@@ -90,11 +91,6 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         fragmentTransaction.add(R.id.main, mMapFragment);
         mMapFragment.getMapAsync(this);
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        removeMapFragment();
     }
 
     private void removeMapFragment(){

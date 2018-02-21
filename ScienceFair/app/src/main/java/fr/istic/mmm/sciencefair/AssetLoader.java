@@ -44,7 +44,10 @@ public class AssetLoader {
     }
 
     private List<Event> loadData() {
-        return Arrays.asList(gson.fromJson(loadString(), Event[].class));
+        System.out.println("Start loading JSON");
+        List<Event> events = Arrays.asList(gson.fromJson(loadString(), Event[].class));
+        System.out.println("End loading JSON");
+        return events;
     }
 
     public List<Event> getEvents() {

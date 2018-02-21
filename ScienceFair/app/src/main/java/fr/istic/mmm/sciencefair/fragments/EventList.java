@@ -3,6 +3,8 @@ package fr.istic.mmm.sciencefair.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,20 +22,16 @@ public class EventList extends Fragment {
 
     private View view;
     private MainActivity activity;
-    private ListView list;
+    private RecyclerView list;
     private List<Event> events;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("----");
-        System.out.println("----");
-        System.out.println("EventList#onCreateView");
-        System.out.println("----");
-        System.out.println("----");
         view = inflater.inflate(R.layout.fragment_event_list, container, false);
         activity = ((MainActivity) getActivity());
-        list = (ListView) view.findViewById(R.id.event_list);
+        list = view.findViewById(R.id.event_list);
         events = activity.getAssetLoader().getEvents();
+        list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(new EventListAdapter(activity, events));
         return view;
     }
