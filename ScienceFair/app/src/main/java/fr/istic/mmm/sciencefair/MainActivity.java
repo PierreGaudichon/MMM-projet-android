@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
