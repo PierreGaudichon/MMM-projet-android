@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private EventList eventList;
     private EventDetails eventDetails;
 
+    private boolean isSharable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,25 +61,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showEventList() {
+        isSharable = false;
         showFullFragment(eventList);
     }
 
     public void showEventDetails(int pos) {
+        isSharable = true;
         showFullFragment(eventDetails);
         eventDetails.setPos(pos);
     }
 
     public void showMap(){
+        isSharable = false;
         showFullFragment(mMapFragment);
         mMapFragment.getMapAsync(eventList);
     }
 
     private void showFullFragment(Fragment fragment) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_main, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        getFragmentManager().executePendingTransactions();
+        if(!fragment.isVisible()) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_main, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+            getFragmentManager().executePendingTransactions();
+        }
     }
 
     @Override
@@ -89,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.toolbar_map) { showMap(); }
+        if(item.getItemId() == R.id.toolbar_list) { showEventList(); }
+        if(item.getItemId() == R.id.toolbar_share) { eventDetails.share(); }
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.toolbar_share).setVisible(isSharable);
         return true;
     }
 

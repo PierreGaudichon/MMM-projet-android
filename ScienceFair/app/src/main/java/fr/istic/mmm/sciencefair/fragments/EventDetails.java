@@ -16,7 +16,7 @@ import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class EventDetails extends Fragment implements View.OnClickListener {
+public class EventDetails extends Fragment {
 
     private View view;
     private MainActivity activity;
@@ -26,7 +26,6 @@ public class EventDetails extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_event_details, container, false);
         activity = ((MainActivity) getActivity());
-        view.findViewById(R.id.event_share).setOnClickListener(this);
         return view;
     }
 
@@ -36,7 +35,7 @@ public class EventDetails extends Fragment implements View.OnClickListener {
         ((TextView) view.findViewById(R.id.event_description)).setText(event.fields.description_longue_fr);
     }
 
-    private void share() {
+    public void share() {
         String name = getResources().getString(R.string.app_name);
         String subject = name + " : " + event.fields.titre_fr;
         String body = subject + "\n" + event.fields.lien;
@@ -47,8 +46,4 @@ public class EventDetails extends Fragment implements View.OnClickListener {
         startActivity(Intent.createChooser(intent, "Share using"));
     }
 
-    @Override
-    public void onClick(View view) {
-        if(view.getId() == R.id.event_share) { share(); }
-    }
 }
