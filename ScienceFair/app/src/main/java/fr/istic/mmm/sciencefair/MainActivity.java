@@ -40,9 +40,7 @@ public class MainActivity extends Activity {
 
         assetLoader = new AssetLoader(getAssets(), AssetLoader.MEDIUM);
 
-        System.out.println("new EventList");
         eventList = new EventList();
-        System.out.println("new EventDetail");
         eventDetails = new EventDetails();
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);

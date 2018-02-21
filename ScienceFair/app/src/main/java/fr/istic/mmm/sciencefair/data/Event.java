@@ -19,6 +19,8 @@ public class Event implements OnMapReadyCallback{
     public class Fields {
         public String titre_fr;
         public String description_fr;
+        public String description_longue_fr;
+        public String lien;
         public double[] geolocalisation;
     }
 
