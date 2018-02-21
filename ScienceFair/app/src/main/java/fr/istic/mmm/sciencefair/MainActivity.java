@@ -42,13 +42,15 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         toolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
         eventList = new EventList();
+        eventList.setEventList(getAssetLoader().getEvents());
         eventDetails = new EventDetails();
         mMapFragment = MapFragment.newInstance();
 
         showEventList();
+        showMap();
         /*logEvent(eventDetails.getView());*/
     }
 
