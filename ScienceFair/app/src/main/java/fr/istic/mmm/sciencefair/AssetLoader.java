@@ -13,9 +13,9 @@ import fr.istic.mmm.sciencefair.data.Event;
 
 public class AssetLoader {
 
-    public static final String SMALL  = "fr-esr-fete-de-la-science-17.small.json";
-    public static final String MEDIUM = "fr-esr-fete-de-la-science-17.medium.json";
-    public static final String BIG    = "fr-esr-fete-de-la-science-17.json";
+    public static final String SMALL  = "fr-esr-fete-de-la-science-17.size-7.json";
+    public static final String MEDIUM = "fr-esr-fete-de-la-science-17.size-100.json";
+    public static final String BIG    = "fr-esr-fete-de-la-science-17.size-all.json";
 
     private AssetManager assets;
     private Gson gson;
