@@ -7,6 +7,9 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         eventDetails.setPos(pos);
     }
 
-    public void showMap(View view){
+    public void showMap(){
         showFullFragment(mMapFragment);
         mMapFragment.getMapAsync(eventList);
     }
@@ -75,6 +78,18 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
         getFragmentManager().executePendingTransactions();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.toolbar_map) { showMap(); }
+        return true;
     }
 
     public AssetLoader getAssetLoader() {
