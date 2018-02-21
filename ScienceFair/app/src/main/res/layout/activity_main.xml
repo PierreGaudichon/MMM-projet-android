@@ -25,3 +25,61 @@
     </FrameLayout>
 
 </LinearLayout>
+
+<!--
+Pris du tuto :
+
+    <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.macjiji.marcus.friendspartyjava.MainActivity">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/add_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ajouter un événement"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="15dp"
+        android:text="Liste des événements :" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Evénements à venir : "
+        android:textStyle="bold"
+        android:layout_margin="15dp"
+        android:textSize="16sp"/>
+    <ListView
+        android:id="@+id/upcoming_events"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Evénements passés : "
+        android:textStyle="bold"
+        android:layout_margin="15dp"
+        android:textSize="16sp"/>
+    <ListView
+        android:id="@+id/past_events"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+</LinearLayout>
+</ScrollView>-->

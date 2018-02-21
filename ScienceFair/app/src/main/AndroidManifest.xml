@@ -24,10 +24,11 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         >
 
-        <!--<activity android:name=".LoginActivity"> Pour Firebase, on se base sur FirebaseAuth pour la page d'accueil-->
+        <!--Pour Firebase, on se base sur FirebaseAuth pour la page d'accueil-->
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
+       <!-- <activity android:name=".MainActivity">-->
+       <activity android:name=".LoginActivity">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
