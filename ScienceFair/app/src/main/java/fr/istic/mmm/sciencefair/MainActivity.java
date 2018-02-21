@@ -15,6 +15,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private MapFragment mMapFragment;
     private FragmentManager manager;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private EventList eventList;
     private EventDetails eventDetails;
