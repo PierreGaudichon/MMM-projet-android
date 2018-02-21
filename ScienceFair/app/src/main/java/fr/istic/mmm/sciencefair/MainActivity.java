@@ -41,8 +41,12 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         eventList = new EventList();
         eventDetails = new EventDetails();
 
-        setEventList();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+
+
+        setEventList();
+        logEvent();
         /*
         ListView list = (ListView) findViewById(R.id.list_main);
         ListView list = findViewById(R.id.list_main);
@@ -52,6 +56,14 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         ListAdapter adapter = new EventListAdapter(this, test);
         list.setAdapter(adapter);
         */
+    }
+
+    public void logEvent(){
+        Bundle bundle = new Bundle();
+        /*bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);*/
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     public void setEventList() {
