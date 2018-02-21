@@ -3,6 +3,7 @@ package fr.istic.mmm.sciencefair;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ public class MainActivity extends Activity implements OnMapReadyCallback{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Appelle de assetLoader pour charger la liste des evenements
         AssetLoader loader = new AssetLoader(getAssets());
 
         ListView list = findViewById(R.id.list_main);
