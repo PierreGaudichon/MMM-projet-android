@@ -18,7 +18,7 @@ import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class EventDetails extends Fragment implements View.OnClickListener {
+public class EventDetails extends Fragment  { /*implements View.OnClickListener*/
 
     private View view;
     private MainActivity activity;
@@ -28,8 +28,8 @@ public class EventDetails extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_event_details, container, false);
         activity = ((MainActivity) getActivity());
-        view.findViewById(R.id.event_score).setOnClickListener(this);
-        //Firebase
+        /*//Firebase
+        view.findViewById(R.id.event_score).setOnClickListener(this);*/
         return view;
     }
 
@@ -39,17 +39,14 @@ public class EventDetails extends Fragment implements View.OnClickListener {
         ((TextView) view.findViewById(R.id.event_description)).setText(event.fields.description_longue_fr);
     }
 
-    public void share() {
-        String name = getResources().getString(R.string.app_name);
-        String subject = name + " : " + event.fields.titre_fr;
-        String body = subject + "\n" + event.fields.lien;
-        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
-        startActivity(Intent.createChooser(intent, "Share using"));
+    private void share() {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "ScienceFair : " + event.fields.titre_fr + "\n" + event.fields.lien;
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share using"));
     }
-    //Firebase
+    /*//Firebase
     public void logEvent(View view){
         String id = "" + view.getId() ;
         Bundle bundle = new Bundle();
@@ -60,10 +57,10 @@ public class EventDetails extends Fragment implements View.OnClickListener {
 
         activity.getmFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.POST_SCORE, bundle);
     }
-    @Override
 
+    @Override
     public void onClick(View view) {
         //Firebase
         if(view.getId() == R.id.event_score) { logEvent(view); }
-    }
+    }*/
 }
