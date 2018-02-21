@@ -32,13 +32,13 @@ Feature list
 
 ### Static (JSON data)
 
-- List View
-- Card view, different fragment
-- Load JSON data (dl from web)
++ List View
++ Card view, different fragment
++ Load JSON data (dl from web)
 - Search with filters (tabs)
 - Search with map
 - Integrating phone functionnalities (?)
-	- Email
+	+ sharing
 
 ### Dynamic
 

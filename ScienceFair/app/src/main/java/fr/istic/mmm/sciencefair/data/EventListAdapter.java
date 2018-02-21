@@ -44,7 +44,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         ((TextView) holder.view.findViewById(R.id.titre)).setText(event.fields.titre_fr);
         ((TextView) holder.view.findViewById(R.id.description)).setText(event.fields.description_fr);
         holder.view.setOnClickListener(l -> {
-            ((MainActivity) ctx).setEventDetails(position);
+            ((MainActivity) ctx).showEventDetails(position);
         });
     }
 
