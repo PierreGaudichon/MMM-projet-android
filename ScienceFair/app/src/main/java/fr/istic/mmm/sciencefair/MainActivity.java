@@ -22,7 +22,7 @@ import java.util.List;
 import fr.istic.mmm.sciencefair.data.Event;
 import fr.istic.mmm.sciencefair.data.EventListAdapter;
 
-public class MainActivity extends Activity implements OnMapReadyCallback {
+public class MainActivity extends Activity {
 
     private GoogleMap mMap;
     private MapFragment mMapFragment;
@@ -74,9 +74,10 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
 
     public void setEventDetails(int pos) {
         FragmentTransaction transaction = manager.beginTransaction();
-        eventDetails.setPos(pos);
         transaction.add(R.id.fragment_main, eventDetails);
         transaction.commit();
+        manager.executePendingTransactions();
+        eventDetails.setPos(pos);
     }
 
     public void showMap(View view){
@@ -85,7 +86,7 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         }
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.main, mMapFragment);
-        mMapFragment.getMapAsync(this);
+        mMapFragment.getMapAsync(eventList);
         fragmentTransaction.commit();
     }
 
@@ -98,16 +99,5 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.remove(mMapFragment);
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        System.out.println("sydney = " + sydney);
     }
 }
