@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
@@ -16,19 +15,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.List;
-
-import fr.istic.mmm.sciencefair.data.Event;
-import fr.istic.mmm.sciencefair.data.EventListAdapter;
-
 public class MainActivity extends Activity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
-    private MapFragment mMapFragment;
-    private FragmentManager manager;
+    private AssetLoader assetLoader;
 
+    private GoogleMap mMap;
+    private FragmentManager manager;
+    private MapFragment mMapFragment;
     private EventList eventList;
     private EventDetails eventDetails;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +32,11 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         manager = getFragmentManager();
         setContentView(R.layout.activity_main);
 
+        assetLoader = new AssetLoader(getAssets(), AssetLoader.BIG);
+
+        System.out.println("new EventList");
         eventList = new EventList();
+        System.out.println("new EventDetail");
         eventDetails = new EventDetails();
 
         setEventList();
@@ -54,15 +54,18 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
 
     public void setEventList() {
         FragmentTransaction transaction = manager.beginTransaction();
+        transaction.remove(eventDetails);
         transaction.add(R.id.fragment_main, eventList);
         transaction.commit();
     }
 
     public void setEventDetails(int pos) {
         FragmentTransaction transaction = manager.beginTransaction();
-        eventDetails.setPos(pos);
+        transaction.remove(eventList);
         transaction.add(R.id.fragment_main, eventDetails);
         transaction.commit();
+        manager.executePendingTransactions();
+        eventDetails.setPos(pos);
     }
 
     public void showMap(View view){
@@ -95,5 +98,9 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         System.out.println("sydney = " + sydney);
+    }
+
+    public AssetLoader getAssetLoader() {
+        return assetLoader;
     }
 }

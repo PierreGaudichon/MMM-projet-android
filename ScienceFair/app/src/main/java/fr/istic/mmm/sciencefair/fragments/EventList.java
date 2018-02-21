@@ -25,10 +25,15 @@ public class EventList extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("----");
+        System.out.println("----");
+        System.out.println("EventList#onCreateView");
+        System.out.println("----");
+        System.out.println("----");
         view = inflater.inflate(R.layout.fragment_event_list, container, false);
         activity = ((MainActivity) getActivity());
         list = (ListView) view.findViewById(R.id.event_list);
-        events = new AssetLoader(getActivity().getAssets()).loadData(AssetLoader.SMALL);
+        events = activity.getAssetLoader().getEvents();
         list.setAdapter(new EventListAdapter(activity, events));
         return view;
     }

@@ -14,16 +14,21 @@ import fr.istic.mmm.sciencefair.data.Event;
 public class AssetLoader {
 
     public static final String SMALL = "fr-esr-fete-de-la-science-17.small.json";
+    public static final String BIG = "fr-esr-fete-de-la-science-17.json";
 
     private AssetManager assets;
     private Gson gson;
+    private String path;
+    private List<Event> events;
 
-    public AssetLoader(AssetManager assets) {
+    public AssetLoader(AssetManager assets, String path) {
         this.assets = assets;
         this.gson = new Gson();
+        this.path = path;
+        this.events = loadData();
     }
 
-    private String loadString(String path) {
+    private String loadString() {
         String json = null;
         try {
             InputStream stream = assets.open(path);
@@ -38,8 +43,12 @@ public class AssetLoader {
         return json;
     }
 
-    public List<Event> loadData(String path) {
-        return Arrays.asList(gson.fromJson(loadString(path), Event[].class));
+    private List<Event> loadData() {
+        return Arrays.asList(gson.fromJson(loadString(), Event[].class));
+    }
+
+    public List<Event> getEvents() {
+        return events;
     }
 
 }
