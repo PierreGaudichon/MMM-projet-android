@@ -20,7 +20,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
 import fr.istic.mmm.sciencefair.fragments.EventList;
 
-public class MainActivity extends Activity { // AppCompatActivity
+public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -42,7 +42,7 @@ public class MainActivity extends Activity { // AppCompatActivity
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         toolbar = findViewById(R.id.toolbar_main);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         eventList = new EventList();
         eventDetails = new EventDetails();
