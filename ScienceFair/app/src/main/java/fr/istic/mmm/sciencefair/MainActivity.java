@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 
+import fr.istic.mmm.sciencefair.fragments.EventDetails;
 import fr.istic.mmm.sciencefair.fragments.EventList;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,18 +24,21 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private MapFragment mMapFragment;
+    private FragmentManager manager;
+
+    private EventList eventList;
+    private EventDetails eventDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentManager manager = getFragmentManager();
+        manager = getFragmentManager();
         setContentView(R.layout.activity_main);
 
-        EventList eventList = new EventList();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.fragment_main, eventList);
-        transaction.commit();
-        setContentView(R.layout.activity_main);
+        eventList = new EventList();
+        eventDetails = new EventDetails();
+
+        setEventList();
 
         /*
         ListView list = (ListView) findViewById(R.id.list_main);
@@ -45,6 +49,19 @@ public class MainActivity extends Activity implements OnMapReadyCallback {
         ListAdapter adapter = new EventListAdapter(this, test);
         list.setAdapter(adapter);
         */
+    }
+
+    public void setEventList() {
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.fragment_main, eventList);
+        transaction.commit();
+    }
+
+    public void setEventDetails(int pos) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        eventDetails.setPos(pos);
+        transaction.add(R.id.fragment_main, eventDetails);
+        transaction.commit();
     }
 
     public void showMap(View view){

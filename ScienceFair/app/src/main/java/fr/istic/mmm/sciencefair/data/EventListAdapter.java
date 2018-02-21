@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 
 public class EventListAdapter extends ArrayAdapter<Event> {
@@ -29,6 +30,9 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         Event event = list.get(pos);
         ((TextView) view.findViewById(R.id.titre)).setText(event.fields.titre_fr);
         ((TextView) view.findViewById(R.id.description)).setText(event.fields.description_fr);
+        view.setOnClickListener(l -> {
+            ((MainActivity) ctx).setEventDetails(pos);
+        });
         return view;
     }
 
