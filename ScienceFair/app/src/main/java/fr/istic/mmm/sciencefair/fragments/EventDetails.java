@@ -18,7 +18,7 @@ import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class EventDetails extends Fragment implements View.OnClickListener {
+public class EventDetails extends Fragment  { /*implements View.OnClickListener*/
 
     private View view;
     private MainActivity activity;
@@ -28,8 +28,8 @@ public class EventDetails extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_event_details, container, false);
         activity = ((MainActivity) getActivity());
-        view.findViewById(R.id.event_score).setOnClickListener(this);
-        //Firebase
+        /*//Firebase
+        view.findViewById(R.id.event_score).setOnClickListener(this);*/
         return view;
     }
 
@@ -49,7 +49,7 @@ public class EventDetails extends Fragment implements View.OnClickListener {
         intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
         startActivity(Intent.createChooser(intent, "Share using"));
     }
-    //Firebase
+    /*//Firebase
     public void logEvent(View view){
         String id = "" + view.getId() ;
         Bundle bundle = new Bundle();
@@ -60,10 +60,10 @@ public class EventDetails extends Fragment implements View.OnClickListener {
 
         activity.getmFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.POST_SCORE, bundle);
     }
-    @Override
 
+    @Override
     public void onClick(View view) {
         //Firebase
         if(view.getId() == R.id.event_score) { logEvent(view); }
-    }
+    }*/
 }
