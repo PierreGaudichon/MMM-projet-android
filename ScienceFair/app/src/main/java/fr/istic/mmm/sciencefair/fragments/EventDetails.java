@@ -24,6 +24,8 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
     private MainActivity activity;
     private Event event;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_event_details, container, false);
@@ -35,6 +37,11 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
 
     public void setPos(int position) {
         event = activity.getAssetLoader().getEvents().get(position);
+        onResume();
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
         onResume();
     }
 
