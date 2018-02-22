@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class AssetLoader {
     private Gson gson;
     private String path;
     private List<Event> events;
+    private String query;
 
     public AssetLoader(AssetManager assets, String path) {
         this.assets = assets;
@@ -52,7 +54,18 @@ public class AssetLoader {
     }
 
     public List<Event> getEvents() {
-        return events;
+        if(query == null) {
+            return events;
+        } else {
+            List<Event> result = new ArrayList<>();
+            for(Event e : events) {
+                if(e.fields.titre_fr.contains(query)) {
+                    result.add(e);
+                }
+            }
+            return result;
+        }
     }
 
+    public void setQuery(String query) { this.query = query; }
 }

@@ -35,8 +35,16 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
 
     public void setPos(int position) {
         event = activity.getAssetLoader().getEvents().get(position);
-        ((TextView) view.findViewById(R.id.event_title)).setText(event.fields.titre_fr);
-        ((TextView) view.findViewById(R.id.event_description)).setText(event.fields.description_longue_fr);
+        onResume();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(event != null) {
+            ((TextView) view.findViewById(R.id.event_title)).setText(event.fields.titre_fr);
+            ((TextView) view.findViewById(R.id.event_description)).setText(event.fields.description_longue_fr);
+        }
     }
 
     public void share() {

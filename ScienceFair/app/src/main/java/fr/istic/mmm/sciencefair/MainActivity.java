@@ -1,17 +1,17 @@
 package fr.istic.mmm.sciencefair;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         eventDetails = new EventDetails();
         mMapFragment = MapFragment.newInstance();
 
+        handleIntent(getIntent());
         showEventList();
         /*logEvent(eventDetails.getView());*/
     }
@@ -95,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar, menu);
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        //SearchView searchView = (SearchView) menu.findItem(R.id.toolbar_search).getActionView();
-        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
+        SearchView searchView = (SearchView) menu.findItem(R.id.toolbar_search).getActionView();
+        ComponentName name = new ComponentName(getApplicationContext(), MainActivity.class);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(name));
         return true;
     }
 
@@ -112,6 +113,22 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.toolbar_share).setVisible(isSharable);
         return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            assetLoader.setQuery(query);
+            showEventList();
+        } else {
+            assetLoader.setQuery(null);
+            showEventList();
+        }
     }
 
     public AssetLoader getAssetLoader() {
