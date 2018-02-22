@@ -2,6 +2,9 @@ package fr.istic.mmm.sciencefair.fragments;
 
 
 import android.app.Fragment;
+import android.content.Context;
+import android.location.Criteria;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +36,10 @@ public class EventList extends Fragment {
     private MainActivity activity;
     private RecyclerView list;
     private List<Event> events;
+
+    public List<Event> getEvents() {
+        return events;
+    }
 
     public void setEventList(List<Event> eventList){
         this.events = eventList;

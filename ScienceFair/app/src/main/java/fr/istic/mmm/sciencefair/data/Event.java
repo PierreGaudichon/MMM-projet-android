@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.Date;
 
 
-public class Event implements OnMapReadyCallback{
+public class Event {
 
     public String datasetid;
     public String recordid;
@@ -24,10 +24,5 @@ public class Event implements OnMapReadyCallback{
         public double[] geolocalisation;
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        LatLng location = new LatLng(fields.geolocalisation[0], fields.geolocalisation[1]);
-        googleMap.addMarker(new MarkerOptions().position(location).title(fields.titre_fr));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-    }
+    public LatLng location;
 }
