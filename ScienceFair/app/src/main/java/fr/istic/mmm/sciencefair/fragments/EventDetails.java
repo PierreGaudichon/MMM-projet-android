@@ -23,8 +23,7 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
     private View view;
     private MainActivity activity;
     private Event event;
-
-
+    private TransportMode transportMode = TransportMode.DRIVE;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +63,19 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
         intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
         startActivity(Intent.createChooser(intent, "Share using"));
     }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public TransportMode getTransportMode() {
+        return transportMode;
+    }
+
+    public void setTransportMode(TransportMode transportMode) {
+        this.transportMode = transportMode;
+    }
+
     /*//Firebase
     public void logEvent(View view){
         String id = "" + view.getId() ;
@@ -81,4 +93,10 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
         //Firebase
         if(view.getId() == R.id.event_score) { logEvent(view); }
     }*/
+
+    public enum TransportMode{
+        DRIVE,
+        WALK,
+        BIKE
+    }
 }

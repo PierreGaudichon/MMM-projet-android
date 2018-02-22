@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.view.View;
+import android.widget.RadioButton;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private EventListOnMapReady eventListOnMapReady;
 
+    private boolean isFirst = true;
     private boolean isSharable;
 
     @Override
@@ -47,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
         }
+
         setContentView(R.layout.activity_main);
 
-        assetLoader = new AssetLoader(getAssets(), AssetLoader.MEDIUM);
+        assetLoader = new AssetLoader(getAssets(), AssetLoader.BIG);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         toolbar = findViewById(R.id.toolbar_main);
@@ -107,7 +112,11 @@ public class MainActivity extends AppCompatActivity {
         if(!fragment.isVisible()) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_main, fragment);
-            transaction.addToBackStack(null);
+            if(isFirst) {
+                isFirst = false;
+            }else{
+                transaction.addToBackStack(null);
+            }
             transaction.commit();
             getFragmentManager().executePendingTransactions();
         }
@@ -165,6 +174,54 @@ public class MainActivity extends AppCompatActivity {
                 //TODO better exit
                 System.exit(2);
             }
+        }
+    }
+
+    public void showOnMap(View view) {
+        showMap();
+        eventListOnMapReady.centerOnEvent = eventDetails.getEvent();
+    }
+
+    public void intentGMRoute(View view){
+
+        char transportMode;
+        switch(eventDetails.getTransportMode()){
+            case BIKE: transportMode = 'b'; break;
+            case WALK: transportMode = 'w'; break;
+            case DRIVE:
+            default:transportMode = 'd';
+        }
+        Event event = eventDetails.getEvent();
+        // Create a Uri from an intent string. Use the result to create an Intent.
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+event.fields.geolocalisation[0]+","+event.fields.geolocalisation[1]+"&mode="+transportMode);
+
+        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        // Make the Intent explicit by setting the Google Maps package
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        // Attempt to start an activity that can handle the Intent
+        startActivity(mapIntent);
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.driveRadioButton:
+                if (checked)
+                    eventDetails.setTransportMode(EventDetails.TransportMode.DRIVE);
+                    break;
+            case R.id.walkRadioButton:
+                if (checked)
+                    eventDetails.setTransportMode(EventDetails.TransportMode.WALK);
+                    break;
+            case R.id.bikeRadioButton:
+                if (checked)
+                    eventDetails.setTransportMode(EventDetails.TransportMode.BIKE);
+                    break;
         }
     }
 }

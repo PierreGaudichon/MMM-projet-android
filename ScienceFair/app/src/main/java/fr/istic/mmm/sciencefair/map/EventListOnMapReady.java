@@ -27,8 +27,10 @@ public class EventListOnMapReady implements OnMapReadyCallback {
     private final EventList eventList;
     private final MainActivity activity;
     private double maxDist = 10000000; // in meters
-    private Location currentLocation = new Location(LocationManager.GPS_PROVIDER);
+    private Location currentLocation;
     private int maxEvents = 100;
+
+    public Event centerOnEvent = null;
 
     public EventListOnMapReady(MainActivity activity, LocationManager locationManager, EventList eventList) {
         this.locationManager = locationManager;
@@ -39,9 +41,17 @@ public class EventListOnMapReady implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         try {
-            Criteria criteria = new Criteria();
-            criteria.setAccuracy(Criteria.ACCURACY_FINE);
-            currentLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
+            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            }else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+            if(currentLocation == null){
+                currentLocation = new Location(LocationManager.GPS_PROVIDER);
+                // Rennes is default location
+                currentLocation.setLatitude(48.111333);
+                currentLocation.setLongitude(-1.672069);
+            }
             googleMap.setMyLocationEnabled(true);
             googleMap.setOnCameraIdleListener(() ->
                 handleIdleCamera(googleMap)
@@ -60,14 +70,19 @@ public class EventListOnMapReady implements OnMapReadyCallback {
 
         addToGoogleMap(googleMap, distanceMap, builder);
 
-        try {
-            LatLngBounds bounds = builder.build();
-            int padding = 50; // offset from edges of the map in pixels
-            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-            googleMap.moveCamera(cu);
-        }catch (IllegalStateException e){
-            e.printStackTrace();
-            Toast.makeText(activity, "No event was found closer to " + maxDist + " meters around you", Toast.LENGTH_LONG).show();
+        if(centerOnEvent != null){
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerOnEvent.location, 15));
+            centerOnEvent = null;
+        }else {
+            try {
+                LatLngBounds bounds = builder.build();
+                int padding = 50; // offset from edges of the map in pixels
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                googleMap.moveCamera(cu);
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                Toast.makeText(activity, "No event was found closer to " + maxDist + " meters around you", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
