@@ -12,7 +12,7 @@ import java.util.List;
 
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class AssetLoader {
+public class AssetLoaderStatic {
 
     public static final String SMALL  = "fr-esr-fete-de-la-science-17.size-7.json";
     public static final String MEDIUM = "fr-esr-fete-de-la-science-17.size-100.json";
@@ -24,7 +24,7 @@ public class AssetLoader {
     private List<Event> events;
     private String query;
 
-    public AssetLoader(AssetManager assets, String path) {
+    public AssetLoaderStatic(AssetManager assets, String path) {
         this.assets = assets;
         this.gson = new Gson();
         this.path = path;

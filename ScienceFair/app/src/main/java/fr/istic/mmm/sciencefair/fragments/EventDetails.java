@@ -6,17 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
-import com.google.firebase.database.DatabaseReference;
 
-import java.util.List;
-
-import fr.istic.mmm.sciencefair.AssetLoader;
 import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
@@ -38,7 +32,7 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
     }
 
     public void setPos(int position) {
-        setEvent(activity.getAssetLoader().getEvents().get(position));
+        setEvent(activity.getAssetLoaderStatic().getEvents().get(position));
     }
 
     public void setEvent(Event event) {

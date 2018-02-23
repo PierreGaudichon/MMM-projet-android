@@ -20,13 +20,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.SearchView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.*;
-import com.google.firebase.firebase_core.*;
 import com.google.firebase.database.FirebaseDatabase;
 
 import fr.istic.mmm.sciencefair.data.Event;
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private DatabaseReference myRef ;
     private FirebaseDatabase database ;
-    private AssetLoader assetLoader;
+    private AssetLoaderStatic assetLoaderStatic;
     private GoogleMap mMap;
 
     private MapFragment mMapFragment;
@@ -78,14 +76,14 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        assetLoader = new AssetLoader(getAssets(), AssetLoader.MEDIUM);
+        assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
         eventList = new EventList();
-        eventList.setEventList(getAssetLoader().getEvents());
+        eventList.setEventList(getAssetLoaderStatic().getEvents());
         eventDetails = new EventDetails();
         mMapFragment = MapFragment.newInstance();
 
@@ -94,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
 
         showEventList();
         /*logEvent(eventDetails.getView());*/
+    }
+
+    public DatabaseReference getDatabase(){
+        return myRef ;
     }
 
 /*    public void logEvent(View view){
@@ -177,14 +179,14 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override public boolean onQueryTextChange(String query) {
                 if(query.isEmpty()) {
-                    assetLoader.setQuery(null);
+                    assetLoaderStatic.setQuery(null);
                     if (mMapFragment.isVisible()) {
                         eventListOnMapReady.handleSearchSubmit();
                     }
                 }else {
-                    assetLoader.setQuery(query);
+                    assetLoaderStatic.setQuery(query);
                 }
-                eventList.setEventList(getAssetLoader().getEvents());
+                eventList.setEventList(getAssetLoaderStatic().getEvents());
                 return true;
             }
         });
@@ -232,10 +234,10 @@ public class MainActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            assetLoader.setQuery(query);
+            assetLoaderStatic.setQuery(query);
             showEventList();
         } else {
-            assetLoader.setQuery(null);
+            assetLoaderStatic.setQuery(null);
             showEventList();
         }
     }
@@ -316,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
      * ------------------------------------------------------------------------
      */
 
-    public AssetLoader getAssetLoader() {
-        return assetLoader;
+    public AssetLoaderStatic getAssetLoaderStatic() {
+        return assetLoaderStatic;
     }
 }
