@@ -106,7 +106,7 @@ public class EventListOnMapReady implements OnMapReadyCallback {
 
         Location location = new Location(LocationManager.GPS_PROVIDER);
         for(Event event : eventList.getEvents()){
-            if(event.fields.geolocalisation != null) {
+            if(event.isGeolocalisation()) {
                 LatLng latLng = new LatLng(event.fields.geolocalisation[0], event.fields.geolocalisation[1]);
                 location.setLatitude(latLng.latitude);
                 location.setLongitude(latLng.longitude);

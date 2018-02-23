@@ -25,4 +25,8 @@ public class Event {
     }
 
     public LatLng location;
+
+    public boolean isGeolocalisation() {
+        return (fields.geolocalisation != null) && (fields.geolocalisation.length >= 2);
+    }
 }
