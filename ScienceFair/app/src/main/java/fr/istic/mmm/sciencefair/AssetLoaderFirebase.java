@@ -30,11 +30,13 @@ public class AssetLoaderFirebase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 EventFirebase efb = dataSnapshot.getValue(EventFirebase.class);
-                for(Event event : assetLoaderStatic.getEvents()) {
-                    if(eventPrefix(event.recordid) == efb.recordid) {
-                        event.eventFirebase = efb;
+                if(efb != null) {
+                    for (Event event : assetLoaderStatic.getEvents()) {
+                        if (eventPrefix(event.recordid).equals(efb.recordid)) {
+                            event.eventFirebase = efb;
+                        }
                     }
-                }
+                } //else Database empty
             }
 
             @Override
