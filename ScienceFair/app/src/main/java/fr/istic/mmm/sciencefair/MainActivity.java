@@ -23,9 +23,10 @@ import android.widget.RadioButton;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.* ;
 
 import fr.istic.mmm.sciencefair.data.Event;
-import fr.istic.mmm.sciencefair.fragments.EventDetails;
+import fr.istic.mmm.sciencefair.fragments.*;
 import fr.istic.mmm.sciencefair.fragments.EventList;
 import fr.istic.mmm.sciencefair.map.EventListOnMapReady;
 
@@ -70,9 +71,13 @@ public class MainActivity extends AppCompatActivity {
 
         handleIntent(getIntent());
         showEventList();
+        initializeFirebase();
         /*logEvent(eventDetails.getView());*/
     }
 
+    public void initializeFirebase(){
+        
+    }
     public FirebaseAnalytics getmFirebaseAnalytics(){
         return mFirebaseAnalytics;
     }
