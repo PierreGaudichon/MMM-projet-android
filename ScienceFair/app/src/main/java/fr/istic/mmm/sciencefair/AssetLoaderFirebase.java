@@ -8,6 +8,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import fr.istic.mmm.sciencefair.data.Course;
 import fr.istic.mmm.sciencefair.data.Event;
 import fr.istic.mmm.sciencefair.data.EventFirebase;
 
@@ -16,6 +17,10 @@ public class AssetLoaderFirebase {
     public static final String eventPrefix(String recordid) {
         return "event-" + recordid;
     }
+    public static final String coursePrefix(String courseid) { return "course-" + courseid; }
+
+    public static final boolean isEvent(String id) { return id.contains("event-"); }
+    public static final boolean isCourse(String id) { return id.contains("course-"); }
 
     private AssetLoaderStatic assetLoaderStatic;
     private FirebaseDatabase database;
@@ -29,15 +34,15 @@ public class AssetLoaderFirebase {
         sciencefair.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                EventFirebase efb = dataSnapshot.getValue(EventFirebase.class);
-                System.out.println(dataSnapshot.child());
-                if(efb != null) {
-                    for (Event event : assetLoaderStatic.getEvents()) {
-                        if (eventPrefix(event.recordid).equals(efb.recordid)) {
-                            event.eventFirebase = efb;
-                        }
-                    }
-                } //else Database empty
+                System.out.println("onDataChanged");
+                for(DataSnapshot snap : dataSnapshot.getChildren()) {
+                    System.out.println("onChild");
+                    System.out.println(snap.getKey());
+                    EventFirebase efb = snap.getValue(EventFirebase.class);
+                    System.out.println(efb);
+                    if(isEvent(snap.getKey())) { onEventFirebase(snap); }
+                    if(isCourse(snap.getKey())) { onCourse(snap); }
+                }
             }
 
             @Override
@@ -47,7 +52,30 @@ public class AssetLoaderFirebase {
         });
     }
 
+    private void onEventFirebase(DataSnapshot snap) {
+        EventFirebase efb = snap.getValue(EventFirebase.class);
+        if(efb != null) {
+            for (Event event : assetLoaderStatic.getEvents()) {
+                if (eventPrefix(event.recordid).equals(efb.getRecordid())) {
+                    event.eventFirebase = efb;
+                }
+            }
+        } //else Database empty
+    }
+
+    private void onCourse(DataSnapshot snap) {
+        System.out.println("onCourse");
+        Course course = snap.getValue(Course.class);
+        if(course != null) {
+            System.out.println(course);
+        }
+    }
+
     public void saveEventFirebase(EventFirebase efb) {
-        sciencefair.child(eventPrefix(efb.recordid)).setValue(efb);
+        sciencefair.child(eventPrefix(efb.getRecordid())).setValue(efb);
+    }
+
+    public void saveCourse(Course course) {
+        sciencefair.child(coursePrefix(course.getCourseid())).setValue(course.getRecordids());
     }
 }

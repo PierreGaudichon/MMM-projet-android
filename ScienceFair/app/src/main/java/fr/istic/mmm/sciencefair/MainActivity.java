@@ -27,8 +27,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.*;
 import com.google.firebase.database.FirebaseDatabase;
 
+import fr.istic.mmm.sciencefair.data.Course;
 import fr.istic.mmm.sciencefair.data.Event;
 import fr.istic.mmm.sciencefair.data.EventFirebase;
+import fr.istic.mmm.sciencefair.fragments.CourseList;
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
 import fr.istic.mmm.sciencefair.fragments.EventList;
 import fr.istic.mmm.sciencefair.map.EventListOnMapReady;
@@ -44,20 +46,20 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private Toolbar toolbar;
-    private DatabaseReference myRef ;
-    private FirebaseDatabase database ;
     private AssetLoaderStatic assetLoaderStatic;
     private AssetLoaderFirebase assetLoaderFirebase;
-    private GoogleMap mMap;
 
     private MapFragment mMapFragment;
     private EventList eventList;
+    private CourseList courseList;
     private EventDetails eventDetails;
     private LocationManager locationManager;
     private EventListOnMapReady eventListOnMapReady;
 
     private boolean isFirst = true;
     private boolean isSharable;
+
+    private Course course;
 
 
     /*
@@ -79,12 +81,15 @@ public class MainActivity extends AppCompatActivity {
 
         assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
         assetLoaderFirebase = new AssetLoaderFirebase(assetLoaderStatic);
-        myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
+        course = new Course();
+
         eventList = new EventList();
         eventList.setEventList(getAssetLoaderStatic().getEvents());
+        courseList = new CourseList();
+        courseList.setEventList(course.getEvents());
         eventDetails = new EventDetails();
         mMapFragment = MapFragment.newInstance();
 
@@ -94,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
         showEventList();
     }
 
-    public DatabaseReference getDatabase(){
-        return myRef ;
-    }
 
     /*
      * ------------------------------------------------------------------------
@@ -127,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
         isSharable = false;
         showFullFragment(mMapFragment);
         mMapFragment.getMapAsync(eventListOnMapReady);
+    }
+
+    public void showCourseList() {
+        isSharable = true;
+        showFullFragment(courseList);
     }
 
     private void showFullFragment(Fragment fragment) {
@@ -188,12 +195,15 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.toolbar_map) { showMap(); }
         if(item.getItemId() == R.id.toolbar_list) { showEventList(); }
         if(item.getItemId() == R.id.toolbar_share) { eventDetails.share(); }
+        if(item.getItemId() == R.id.toolbar_manager) { eventDetails.setManager(); }
+        if(item.getItemId() == R.id.toolbar_course) { showCourseList(); }
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.toolbar_share).setVisible(isSharable);
+        menu.findItem(R.id.toolbar_manager).setVisible(eventDetails.isVisible());
         return true;
     }
 
@@ -279,11 +289,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(mapIntent);
     }
 
-
     public void onRateClicked(View view) {
         eventDetails.setRate(assetLoaderFirebase);
     }
-
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -310,6 +318,31 @@ public class MainActivity extends AppCompatActivity {
     /*
      * ------------------------------------------------------------------------
      *
+     * COURSES
+     *
+     * ------------------------------------------------------------------------
+     */
+
+    public void addToCourse(Event event) {
+        System.out.println("AddToCourse : " + event.recordid);
+        course.add(event);
+        courseList.setEventList(course.getEvents());
+    }
+
+    public void removeFromCourse(Event event) {
+        System.out.println("RemoveFromCourse : " + event.recordid);
+        course.remove(event);
+        courseList.setEventList(course.getEvents());
+    }
+
+    public void addNameToCourse(String name) {
+        course.setName(name);
+    }
+
+
+    /*
+     * ------------------------------------------------------------------------
+     *
      * GETTERS - SETTERS
      *
      * ------------------------------------------------------------------------
@@ -317,5 +350,9 @@ public class MainActivity extends AppCompatActivity {
 
     public AssetLoaderStatic getAssetLoaderStatic() {
         return assetLoaderStatic;
+    }
+
+    public AssetLoaderFirebase getAssetLoaderFirebase() {
+        return assetLoaderFirebase;
     }
 }

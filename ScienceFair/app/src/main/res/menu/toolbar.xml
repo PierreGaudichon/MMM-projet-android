@@ -21,13 +21,19 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/toolbar_course"
+        android:icon="@drawable/ic_explore_black_24dp"
+        android:title="Courses"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/toolbar_share"
         android:icon="@drawable/ic_share_black_24dp"
         android:title="Share"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/action_settings"
-        android:title="Settings"
+    <item android:id="@+id/toolbar_manager"
+        android:title="Manager"
         app:showAsAction="never"/>
 
 </menu>
