@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.SearchView;
@@ -34,6 +36,14 @@ import fr.istic.mmm.sciencefair.map.EventListOnMapReady;
 
 public class MainActivity extends AppCompatActivity {
 
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * ATTRIBUTES
+     *
+     * ------------------------------------------------------------------------
+     */
+
     private Toolbar toolbar;
     private FirebaseAnalytics mFirebaseAnalytics;
     private DatabaseReference myRef ;
@@ -50,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFirst = true;
     private boolean isSharable;
 
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * ON_CREATE
+     *
+     * ------------------------------------------------------------------------
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        assetLoader = new AssetLoader(getAssets(), AssetLoader.BIG);
+        assetLoader = new AssetLoader(getAssets(), AssetLoader.MEDIUM);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
@@ -73,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         eventListOnMapReady = new EventListOnMapReady(this, locationManager, eventList);
 
-        handleIntent(getIntent());
         showEventList();
         /*logEvent(eventDetails.getView());*/
     }
@@ -85,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
         bundle.putLong(FirebaseAnalytics.Param.SCORE, 5);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.POST_SCORE, bundle);
     }*/
+
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * SHOW_FRAGMENTS
+     *
+     * ------------------------------------------------------------------------
+     */
 
     public void showEventList() {
         isSharable = false;
@@ -123,6 +150,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * MENU
+     *
+     * ------------------------------------------------------------------------
+     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar, menu);
@@ -131,6 +167,27 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.toolbar_search).getActionView();
         ComponentName name = new ComponentName(getApplicationContext(), MainActivity.class);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(name));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override public boolean onQueryTextSubmit(String query) {
+                hideKeyboard();
+                if(mMapFragment.isVisible()){
+                    eventListOnMapReady.handleSearchSubmit();
+                }
+                return true;
+            }
+            @Override public boolean onQueryTextChange(String query) {
+                if(query.isEmpty()) {
+                    assetLoader.setQuery(null);
+                    if (mMapFragment.isVisible()) {
+                        eventListOnMapReady.handleSearchSubmit();
+                    }
+                }else {
+                    assetLoader.setQuery(query);
+                }
+                eventList.setEventList(getAssetLoader().getEvents());
+                return true;
+            }
+        });
         return true;
     }
 
@@ -147,11 +204,31 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
+    public void hideKeyboard(){
+        // Check if no view has focus:
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+    }
+
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * INTENT - SEARCH
+     *
+     * ------------------------------------------------------------------------
+     */
+
+    //DEPRECIATED, do not remove from codebase.
+    @Override protected void onNewIntent(Intent intent) {
         handleIntent(intent);
     }
 
+    // DEPRECIATED, do not remove from codebase.
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
@@ -163,13 +240,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public AssetLoader getAssetLoader() {
-        return assetLoader;
-    }
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * MAP
+     *
+     * ------------------------------------------------------------------------
+     */
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                              int[] grantResults){
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
         for(int i = 0; i < permissions.length; i++){
             if(permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[i] == -1) {
                 //TODO better exit
@@ -224,5 +305,18 @@ public class MainActivity extends AppCompatActivity {
                     eventDetails.setTransportMode(EventDetails.TransportMode.BIKE);
                     break;
         }
+    }
+
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * GETTERS - SETTERS
+     *
+     * ------------------------------------------------------------------------
+     */
+
+    public AssetLoader getAssetLoader() {
+        return assetLoader;
     }
 }

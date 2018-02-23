@@ -47,8 +47,11 @@ public class AssetLoader {
     }
 
     private List<Event> loadData() {
+        List<Event> events = new ArrayList<>();
         System.out.println("Start loading JSON");
-        List<Event> events = Arrays.asList(gson.fromJson(loadString(), Event[].class));
+        for(Event event : Arrays.asList(gson.fromJson(loadString(), Event[].class))) {
+            if(event.fields.titre_fr != null) { events.add(event); }
+        }
         System.out.println("End loading JSON");
         return events;
     }
@@ -58,9 +61,11 @@ public class AssetLoader {
             return events;
         } else {
             List<Event> result = new ArrayList<>();
-            for(Event e : events) {
-                if(e.fields.titre_fr.contains(query)) {
-                    result.add(e);
+            for(Event event : events) {
+                String title = event.fields.titre_fr.toLowerCase();
+                String q = query.toLowerCase();
+                if(title.contains(q)) {
+                    result.add(event);
                 }
             }
             return result;

@@ -14,6 +14,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/event_image"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true" />
+
         <TextView
             android:id="@+id/event_title"
             android:layout_width="fill_parent"
@@ -42,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rate"/>
         </LinearLayout>
-        <LinearLayout
+        <LinearLayout android:id="@+id/routeLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -82,5 +88,11 @@
                 android:text="GO"
                 android:onClick="intentGMRoute"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/warningText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Geolocation found, sorry"
+            android:visibility="gone"/>
     </LinearLayout>
 </ScrollView>

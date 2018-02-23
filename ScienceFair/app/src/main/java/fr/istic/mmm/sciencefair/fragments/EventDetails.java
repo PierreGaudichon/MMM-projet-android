@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.squareup.picasso.Picasso;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
@@ -36,12 +38,15 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
     }
 
     public void setPos(int position) {
-        event = activity.getAssetLoader().getEvents().get(position);
-        onResume();
+        setEvent(activity.getAssetLoader().getEvents().get(position));
     }
 
     public void setEvent(Event event) {
         this.event = event;
+        if(!event.hasGeolocalisation()) {
+            view.findViewById(R.id.routeLinearLayout).setVisibility(View.GONE);
+            view.findViewById(R.id.warningText).setVisibility(View.VISIBLE);
+        }
         onResume();
     }
 
@@ -50,7 +55,10 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
         super.onResume();
         if(event != null) {
             ((TextView) view.findViewById(R.id.event_title)).setText(event.fields.titre_fr);
-            ((TextView) view.findViewById(R.id.event_description)).setText(event.fields.description_longue_fr);
+            String desc = (event.fields.description_longue_fr != null) ?
+                    event.fields.description_longue_fr : event.fields.description_fr;
+            ((TextView) view.findViewById(R.id.event_description)).setText(desc);
+            Picasso.with(getContext()).load(event.fields.image).into((ImageView) view.findViewById(R.id.event_image));
         }
     }
 

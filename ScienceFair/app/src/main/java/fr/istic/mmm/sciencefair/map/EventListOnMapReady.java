@@ -1,6 +1,5 @@
 package fr.istic.mmm.sciencefair.map;
 
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.widget.Toast;
@@ -29,6 +28,7 @@ public class EventListOnMapReady implements OnMapReadyCallback {
     private double maxDist = 10000000; // in meters
     private Location currentLocation;
     private int maxEvents = 100;
+    private GoogleMap googleMap;
 
     public Event centerOnEvent = null;
 
@@ -40,6 +40,7 @@ public class EventListOnMapReady implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
         try {
             if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                 currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -52,15 +53,13 @@ public class EventListOnMapReady implements OnMapReadyCallback {
                 currentLocation.setLatitude(48.111333);
                 currentLocation.setLongitude(-1.672069);
             }
-            googleMap.setMyLocationEnabled(true);
-            googleMap.setOnCameraIdleListener(() ->
-                handleIdleCamera(googleMap)
-            );
+            this.googleMap.setMyLocationEnabled(true);
+            this.googleMap.setOnCameraIdleListener(this::handleIdleCamera);
         }catch(SecurityException e){
             e.printStackTrace();
         }
 
-        googleMap.setOnMarkerClickListener(this::handleInfoWindowClose);
+        this.googleMap.setOnMarkerClickListener(this::handleInfoWindowClose);
 //        googleMap.setOnInfoWindowClickListener(this::handleInfoWindowClick);
 //        googleMap.setOnInfoWindowCloseListener(this::handleInfoWindowClose);
 
@@ -68,17 +67,17 @@ public class EventListOnMapReady implements OnMapReadyCallback {
 
         SortedMap<Double, Event> distanceMap = getSortedDistanceMap(currentLocation);
 
-        addToGoogleMap(googleMap, distanceMap, builder);
+        addToGoogleMap(distanceMap, builder);
 
         if(centerOnEvent != null){
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerOnEvent.location, 15));
+            this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerOnEvent.location, 15));
             centerOnEvent = null;
         }else {
             try {
                 LatLngBounds bounds = builder.build();
                 int padding = 50; // offset from edges of the map in pixels
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                googleMap.moveCamera(cu);
+                this.googleMap.moveCamera(cu);
             } catch (IllegalStateException e) {
                 e.printStackTrace();
                 Toast.makeText(activity, "No event was found closer to " + maxDist + " meters around you", Toast.LENGTH_LONG).show();
@@ -106,7 +105,7 @@ public class EventListOnMapReady implements OnMapReadyCallback {
 
         Location location = new Location(LocationManager.GPS_PROVIDER);
         for(Event event : eventList.getEvents()){
-            if(event.fields.geolocalisation != null) {
+            if(event.hasGeolocalisation()) {
                 LatLng latLng = new LatLng(event.fields.geolocalisation[0], event.fields.geolocalisation[1]);
                 location.setLatitude(latLng.latitude);
                 location.setLongitude(latLng.longitude);
@@ -120,7 +119,7 @@ public class EventListOnMapReady implements OnMapReadyCallback {
         return sortedMap;
     }
 
-    private void addToGoogleMap(GoogleMap googleMap, SortedMap<Double, Event> distanceMap, LatLngBounds.Builder builder){
+    private void addToGoogleMap(SortedMap<Double, Event> distanceMap, LatLngBounds.Builder builder){
         int maxEventsTemp = maxEvents;
         for(Event event : distanceMap.values()){
             if(maxEventsTemp-- <= 0){
@@ -134,13 +133,31 @@ public class EventListOnMapReady implements OnMapReadyCallback {
         }
     }
 
-    private void handleIdleCamera(GoogleMap googleMap) {
+    private void handleIdleCamera() {
+        addClosestToMapCenter(null);
+    }
+
+    private void addClosestToMapCenter(LatLngBounds.Builder builder) {
         Location locationTarget = new Location(LocationManager.GPS_PROVIDER);
         googleMap.clear();
         LatLng latLngTarget = googleMap.getCameraPosition().target;
         locationTarget.setLatitude(latLngTarget.latitude);
         locationTarget.setLongitude(latLngTarget.longitude);
         SortedMap<Double, Event> distanceMap = getSortedDistanceMap(locationTarget);
-        addToGoogleMap(googleMap, distanceMap, null);
+        addToGoogleMap(distanceMap, builder);
+    }
+
+    public void handleSearchSubmit(){
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        addClosestToMapCenter(builder);
+        try {
+            LatLngBounds bounds = builder.build();
+            int padding = 50; // offset from edges of the map in pixels
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+            this.googleMap.moveCamera(cu);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            Toast.makeText(activity, "No event matching the query was found  closer to " + maxDist + " meters around you", Toast.LENGTH_LONG).show();
+        }
     }
 }
