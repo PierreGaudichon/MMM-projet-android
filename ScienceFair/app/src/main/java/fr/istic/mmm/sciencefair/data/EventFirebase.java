@@ -1,10 +1,10 @@
 package fr.istic.mmm.sciencefair.data;
 
 public class EventFirebase {
-    private String recordid;
-    private int nbVotes;
-    private float rating;
-    private int remaining;
+    public String recordid;
+    public int nbVotes;
+    public float rating;
+    public int remaining;
 
     public EventFirebase() { }
 
