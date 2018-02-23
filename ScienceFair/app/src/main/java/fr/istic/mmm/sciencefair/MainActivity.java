@@ -311,6 +311,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void onButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.driveRadioButton:
+                if (checked)
+                    eventDetails.setTransportMode(EventDetails.TransportMode.DRIVE);
+                break;
+            case R.id.walkRadioButton:
+                if (checked)
+                    eventDetails.setTransportMode(EventDetails.TransportMode.WALK);
+                break;
+            case R.id.bikeRadioButton:
+                if (checked)
+                    eventDetails.setTransportMode(EventDetails.TransportMode.BIKE);
+                break;
+        }
+    }
+
 
     /*
      * ------------------------------------------------------------------------

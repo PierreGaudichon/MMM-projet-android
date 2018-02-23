@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -16,7 +17,7 @@ import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class EventDetails extends Fragment  { /*implements View.OnClickListener*/
+public class EventDetails extends Fragment  {
 
     private View view;
     private MainActivity activity;
@@ -57,6 +58,10 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
                     event.fields.description_longue_fr : event.fields.description_fr;
             ((TextView) view.findViewById(R.id.event_description)).setText(desc);
             Picasso.with(getContext()).load(event.fields.image).into((ImageView) view.findViewById(R.id.event_image));
+            //Rating initialise with EventFirebase
+            if(event.eventFirebase != null){
+                ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
+            }
         }
     }
 
@@ -83,23 +88,10 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
         this.transportMode = transportMode;
     }
 
-    /*//Firebase
-    public void logEvent(View view){
-        String id = "" + view.getId() ;
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+    public void getRate(){
 
-        // Inserer un champ text pour que l'utilisateur rentre une note autre que 5
-        bundle.putLong(FirebaseAnalytics.Param.SCORE, 5);
 
-        activity.getmFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.POST_SCORE, bundle);
     }
-
-    @Override
-    public void onClick(View view) {
-        //Firebase
-        if(view.getId() == R.id.event_score) { logEvent(view); }
-    }*/
 
     public enum TransportMode{
         DRIVE,
