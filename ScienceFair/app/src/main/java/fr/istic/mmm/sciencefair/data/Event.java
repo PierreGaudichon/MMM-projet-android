@@ -27,6 +27,8 @@ public class Event {
 
     public LatLng location;
 
+    public EventFirebase eventFirebase;
+
     public boolean hasGeolocalisation() {
         return (fields.geolocalisation != null) && (fields.geolocalisation.length >= 2);
     }
