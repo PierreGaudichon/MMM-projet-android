@@ -56,7 +56,7 @@ public class AssetLoaderFirebase {
         EventFirebase efb = snap.getValue(EventFirebase.class);
         if(efb != null) {
             for (Event event : assetLoaderStatic.getEvents()) {
-                if (eventPrefix(event.recordid).equals(efb.getRecordid())) {
+                if (event.recordid.equals(efb.getRecordid())) {
                     event.eventFirebase = efb;
                 }
             }
