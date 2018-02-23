@@ -83,10 +83,9 @@ public class EventDetails extends Fragment  {
             ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
             if(event.eventFirebase.remaining != -1){
                 ((NumberPicker) view.findViewById(R.id.remainingPlacesNumberPicker)).setValue(this.event.eventFirebase.remaining);
-                String remaining = "" + event.eventFirebase.remaining;
                 ((TextView) view
                         .findViewById(R.id.remainingPlacesTextView))
-                        .setText(remaining);
+                        .setText("" + event.eventFirebase.remaining);
             }else{
                 ((NumberPicker) view.findViewById(R.id.remainingPlacesNumberPicker)).setValue(0);
                 ((TextView) view.findViewById(R.id.remainingPlacesTextView)).setText("NA");
