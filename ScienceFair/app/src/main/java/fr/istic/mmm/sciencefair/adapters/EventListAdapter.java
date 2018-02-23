@@ -13,7 +13,7 @@ import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class EventListAdapter extends ListAdapter {
+public class EventListAdapter extends ListAdapter<Event> {
 
     public EventListAdapter(Context ctx, List<Event> list) {
         super(ctx, list);

@@ -336,13 +336,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean publishCourse(String name) {
-        if(course.getEvents().size() > 0) {
+        System.out.println("PublishCourse : " + name);
+        System.out.println(course.getEvents().size() > 0);
+        System.out.println(name != "");
+        if((course.getEvents().size() > 0) && (name != "")) {
             course.setName(name);
             assetLoaderFirebase.saveCourse(course);
             course = new Course();
             courseList.setEventList(course.getEvents());
+            return true;
         }
-        return true;
+        return false;
     }
 
 

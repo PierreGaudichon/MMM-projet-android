@@ -5,8 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My course"/>
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/course_list"
+        android:id="@+id/course_my_list"
         android:scrollbars="vertical"
         android:layout_weight="2"
         android:layout_width="match_parent"
@@ -24,5 +29,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Publish course"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All courses"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/course_all_list"
+        android:scrollbars="vertical"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
 </LinearLayout>

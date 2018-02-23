@@ -11,9 +11,8 @@ import java.util.List;
 
 import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
-import fr.istic.mmm.sciencefair.data.Event;
 
-public abstract class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public abstract class ListAdapter<T> extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View view;
@@ -24,10 +23,9 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewH
     }
 
     protected Context ctx;
-    protected List<Event> list;
+    protected List<T> list;
 
-    public ListAdapter(Context ctx, List<Event> list) {
-        //super(ctx, R.layout.fragment_event_details, list);
+    public ListAdapter(Context ctx, List<T> list) {
         this.ctx = ctx;
         this.list = list;
     }
@@ -41,10 +39,10 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewH
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return (list == null) ? 0 : list.size();
     }
 
-    public void setList(List<Event> list) {
+    public void setList(List<T> list) {
         this.list = list;
         notifyDataSetChanged();
     }

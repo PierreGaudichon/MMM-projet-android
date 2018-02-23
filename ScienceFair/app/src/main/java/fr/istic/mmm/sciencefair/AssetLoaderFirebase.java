@@ -52,7 +52,7 @@ public class AssetLoaderFirebase {
         EventFirebase efb = snap.getValue(EventFirebase.class);
         if(efb != null) {
             for (Event event : assetLoaderStatic.getEvents()) {
-                if (event.recordid.equals(efb.getRecordid())) {
+                if (event.recordid.equals(efb.recordid)) {
                     event.eventFirebase = efb;
                 }
             }
@@ -68,10 +68,11 @@ public class AssetLoaderFirebase {
     }
 
     public void saveEventFirebase(EventFirebase efb) {
-        sciencefair.child(eventPrefix(efb.getRecordid())).setValue(efb);
+        sciencefair.child(eventPrefix(efb.recordid)).setValue(efb);
     }
 
     public void saveCourse(Course course) {
+        System.out.println(course.getCourseid());
         sciencefair.child(coursePrefix(course.getCourseid())).setValue(course);
     }
 }

@@ -9,9 +9,9 @@ import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class CourseAdapter extends ListAdapter {
+public class MyCourseAdapter extends ListAdapter<Event> {
 
-    public CourseAdapter(Context ctx, List<Event> list) {
+    public MyCourseAdapter(Context ctx, List<Event> list) {
         super(ctx, list);
     }
 
@@ -26,6 +26,6 @@ public class CourseAdapter extends ListAdapter {
 
     @Override
     public int inflateId() {
-        return R.layout.fragment_course_item;
+        return R.layout.fragment_course_my_item;
     }
 }
