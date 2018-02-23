@@ -34,12 +34,7 @@ public class AssetLoaderFirebase {
         sciencefair.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("onDataChanged");
                 for(DataSnapshot snap : dataSnapshot.getChildren()) {
-                    System.out.println("onChild");
-                    System.out.println(snap.getKey());
-                    EventFirebase efb = snap.getValue(EventFirebase.class);
-                    System.out.println(efb);
                     if(isEvent(snap.getKey())) { onEventFirebase(snap); }
                     if(isCourse(snap.getKey())) { onCourse(snap); }
                 }
