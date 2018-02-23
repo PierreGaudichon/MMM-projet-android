@@ -127,6 +127,7 @@ public class EventDetails extends Fragment  {
         event.eventFirebase.nbVotes = nbVotesf;
         //save in database
         assetLoaderFirebase.saveEventFirebase(event.eventFirebase);
+        ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
         view.findViewById(R.id.rateButton).setEnabled(false);
 
 
