@@ -128,8 +128,6 @@ public class EventDetails extends Fragment  {
         assetLoaderFirebase.saveEventFirebase(event.eventFirebase);
         ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
         view.findViewById(R.id.rateButton).setEnabled(false);
-
-
     }
 
     public void setManager() {
