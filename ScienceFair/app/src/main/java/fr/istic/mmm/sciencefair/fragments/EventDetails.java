@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import fr.istic.mmm.sciencefair.AssetLoaderFirebase;
 import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
@@ -56,6 +57,9 @@ public class EventDetails extends Fragment  {
             if(event.eventFirebase != null){
                 ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
             }
+            else{
+                ((RatingBar) view.findViewById(R.id.event_rating)).setRating((float)2.5);
+            }
         }
     }
 
@@ -82,11 +86,18 @@ public class EventDetails extends Fragment  {
         this.transportMode = transportMode;
     }
 
-    public void getRate(){
-
+    public void setRate(AssetLoaderFirebase assetLoaderFirebase){
+        event = getEvent();
+        if(event.eventFirebase.nbVotes != 0) {
+            //Mis a jour de l'eventFirebase + modifier qu'une seule fois le un click
+            int nbVotesf = event.eventFirebase.nbVotes + 1;
+            event.eventFirebase.rating = (((RatingBar) view.findViewById(R.id.event_rating)).getRating() + (event.eventFirebase.rating * event.eventFirebase.nbVotes)) / nbVotesf;
+            event.eventFirebase.nbVotes = nbVotesf;
+            //save in database
+            assetLoaderFirebase.saveEventFirebase(event.eventFirebase);
+        }
 
     }
-
     public enum TransportMode{
         DRIVE,
         WALK,

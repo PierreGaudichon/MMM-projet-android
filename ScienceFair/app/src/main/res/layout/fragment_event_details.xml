@@ -47,6 +47,7 @@
                 android:id="@+id/event_score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onRateClicked"
                 android:text="Rate"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/routeLinearLayout"

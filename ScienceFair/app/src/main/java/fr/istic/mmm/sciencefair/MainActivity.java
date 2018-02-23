@@ -92,22 +92,11 @@ public class MainActivity extends AppCompatActivity {
         eventListOnMapReady = new EventListOnMapReady(this, locationManager, eventList);
 
         showEventList();
-        /*logEvent(eventDetails.getView());*/
-
     }
 
     public DatabaseReference getDatabase(){
         return myRef ;
     }
-
-/*    public void logEvent(View view){
-        String id = "" + view.getId() ;
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
-        bundle.putLong(FirebaseAnalytics.Param.SCORE, 5);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.POST_SCORE, bundle);
-    }*/
-
 
     /*
      * ------------------------------------------------------------------------
@@ -290,28 +279,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(mapIntent);
     }
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.driveRadioButton:
-                if (checked)
-                    eventDetails.setTransportMode(EventDetails.TransportMode.DRIVE);
-                    break;
-            case R.id.walkRadioButton:
-                if (checked)
-                    eventDetails.setTransportMode(EventDetails.TransportMode.WALK);
-                    break;
-            case R.id.bikeRadioButton:
-                if (checked)
-                    eventDetails.setTransportMode(EventDetails.TransportMode.BIKE);
-                    break;
-        }
+    public void onRateClicked(View view) {
+        eventDetails.setRate(assetLoaderFirebase);
     }
 
-    public void onButtonClicked(View view) {
+
+    public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
