@@ -72,6 +72,7 @@ public class EventDetails extends Fragment  {
                     event.fields.description_longue_fr : event.fields.description_fr;
             ((TextView) view.findViewById(R.id.event_description)).setText(desc);
             Picasso.with(getContext()).load(event.fields.image).into((ImageView) view.findViewById(R.id.event_image));
+            view.findViewById(R.id.rateButton).setEnabled(true);
             //Rating initialise with EventFirebase
             if(event.eventFirebase == null) {
                 event.eventFirebase = new EventFirebase();
@@ -83,7 +84,9 @@ public class EventDetails extends Fragment  {
             ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
             if(event.eventFirebase.remaining != -1){
                 ((NumberPicker) view.findViewById(R.id.remainingPlacesNumberPicker)).setValue(this.event.eventFirebase.remaining);
-                ((TextView) view.findViewById(R.id.remainingPlacesTextView)).setText(event.eventFirebase.remaining);
+                ((TextView) view
+                        .findViewById(R.id.remainingPlacesTextView))
+                        .setText("" + event.eventFirebase.remaining);
             }else{
                 ((NumberPicker) view.findViewById(R.id.remainingPlacesNumberPicker)).setValue(0);
                 ((TextView) view.findViewById(R.id.remainingPlacesTextView)).setText("NA");
@@ -123,6 +126,9 @@ public class EventDetails extends Fragment  {
         event.eventFirebase.nbVotes = nbVotesf;
         //save in database
         assetLoaderFirebase.saveEventFirebase(event.eventFirebase);
+        ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
+        view.findViewById(R.id.rateButton).setEnabled(false);
+
 
     }
 
