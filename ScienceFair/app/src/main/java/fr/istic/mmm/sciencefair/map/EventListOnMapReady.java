@@ -1,6 +1,5 @@
 package fr.istic.mmm.sciencefair.map;
 
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.widget.Toast;
@@ -106,7 +105,7 @@ public class EventListOnMapReady implements OnMapReadyCallback {
 
         Location location = new Location(LocationManager.GPS_PROVIDER);
         for(Event event : eventList.getEvents()){
-            if(event.isGeolocalisation()) {
+            if(event.hasGeolocalisation()) {
                 LatLng latLng = new LatLng(event.fields.geolocalisation[0], event.fields.geolocalisation[1]);
                 location.setLatitude(latLng.latitude);
                 location.setLongitude(latLng.longitude);

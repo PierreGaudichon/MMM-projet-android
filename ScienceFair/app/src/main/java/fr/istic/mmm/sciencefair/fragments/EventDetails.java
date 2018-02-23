@@ -37,12 +37,15 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
     }
 
     public void setPos(int position) {
-        event = activity.getAssetLoader().getEvents().get(position);
-        onResume();
+        setEvent(activity.getAssetLoader().getEvents().get(position));
     }
 
     public void setEvent(Event event) {
         this.event = event;
+        if(!event.hasGeolocalisation()) {
+            view.findViewById(R.id.routeLinearLayout).setVisibility(View.GONE);
+            view.findViewById(R.id.warningText).setVisibility(View.VISIBLE);
+        }
         onResume();
     }
 

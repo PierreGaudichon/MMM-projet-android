@@ -27,7 +27,7 @@ public class Event {
 
     public LatLng location;
 
-    public boolean isGeolocalisation() {
+    public boolean hasGeolocalisation() {
         return (fields.geolocalisation != null) && (fields.geolocalisation.length >= 2);
     }
 }
