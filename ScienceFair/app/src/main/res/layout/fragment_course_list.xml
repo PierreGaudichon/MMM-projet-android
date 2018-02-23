@@ -16,11 +16,13 @@
         android:id="@+id/course_name"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:hint="Course name"/>
 
     <Button
-        android:id="@+id/course_commit"
+        android:id="@+id/course_publish"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Publish course"/>
 
 </LinearLayout>

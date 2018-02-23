@@ -340,8 +340,14 @@ public class MainActivity extends AppCompatActivity {
         courseList.setEventList(course.getEvents());
     }
 
-    public void addNameToCourse(String name) {
-        course.setName(name);
+    public boolean publishCourse(String name) {
+        if(course.getEvents().size() > 0) {
+            course.setName(name);
+            assetLoaderFirebase.saveCourse(course);
+            course = new Course();
+            courseList.setEventList(course.getEvents());
+        }
+        return true;
     }
 
 
