@@ -16,7 +16,6 @@ import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.adapters.CourseAdapter;
 import fr.istic.mmm.sciencefair.data.Event;
-import fr.istic.mmm.sciencefair.adapters.EventListAdapter;
 
 public class CourseList extends Fragment {
 
@@ -36,9 +35,9 @@ public class CourseList extends Fragment {
         adapter = new CourseAdapter(activity, events);
         list.setAdapter(adapter);
 
-        ((Button) view.findViewById(R.id.course_commit)).setOnClickListener(v -> {
+        ((Button) view.findViewById(R.id.course_publish)).setOnClickListener(v -> {
             String name = ((EditText) view.findViewById(R.id.course_name)).getText().toString();
-            activity.addNameToCourse(name);
+            activity.publishCourse(name);
         });
 
         return view;

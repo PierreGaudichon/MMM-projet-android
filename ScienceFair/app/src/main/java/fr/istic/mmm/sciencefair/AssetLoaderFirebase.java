@@ -7,6 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.UUID;
 
 import fr.istic.mmm.sciencefair.data.Course;
 import fr.istic.mmm.sciencefair.data.Event;
@@ -71,6 +72,6 @@ public class AssetLoaderFirebase {
     }
 
     public void saveCourse(Course course) {
-        sciencefair.child(coursePrefix(course.getCourseid())).setValue(course.getRecordids());
+        sciencefair.child(coursePrefix(course.getCourseid())).setValue(course);
     }
 }
