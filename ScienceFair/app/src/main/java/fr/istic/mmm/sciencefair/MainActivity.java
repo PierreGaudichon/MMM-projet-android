@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference myRef ;
     private FirebaseDatabase database ;
     private AssetLoaderStatic assetLoaderStatic;
+    private AssetLoaderFirebase assetLoaderFirebase;
     private GoogleMap mMap;
 
     private MapFragment mMapFragment;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
+        assetLoaderFirebase = new AssetLoaderFirebase();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
