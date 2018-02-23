@@ -30,6 +30,7 @@ public class AssetLoaderFirebase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 EventFirebase efb = dataSnapshot.getValue(EventFirebase.class);
+                System.out.println(dataSnapshot.child());
                 if(efb != null) {
                     for (Event event : assetLoaderStatic.getEvents()) {
                         if (eventPrefix(event.recordid).equals(efb.recordid)) {
