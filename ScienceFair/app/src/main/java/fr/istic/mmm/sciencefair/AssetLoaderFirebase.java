@@ -19,6 +19,9 @@ public class AssetLoaderFirebase {
     }
     public static final String coursePrefix(String courseid) { return "course-" + courseid; }
 
+    public static final boolean isEvent(String id) { return id.contains("event-"); }
+    public static final boolean isCourse(String id) { return id.contains("course-"); }
+
     private AssetLoaderStatic assetLoaderStatic;
     private FirebaseDatabase database;
     private DatabaseReference sciencefair;
@@ -37,17 +40,9 @@ public class AssetLoaderFirebase {
                     System.out.println(snap.getKey());
                     EventFirebase efb = snap.getValue(EventFirebase.class);
                     System.out.println(efb);
+                    if(isEvent(snap.getKey())) { onEventFirebase(snap); }
+                    if(isCourse(snap.getKey())) { onCourse(snap); }
                 }
-                /*
-                EventFirebase efb = dataSnapshot.getValue(EventFirebase.class);
-                if(efb != null) {
-                    for (Event event : assetLoaderStatic.getEvents()) {
-                        if (eventPrefix(event.recordid).equals(efb.getRecordid())) {
-                            event.eventFirebase = efb;
-                        }
-                    }
-                } //else Database empty
-                */
             }
 
             @Override
@@ -55,6 +50,25 @@ public class AssetLoaderFirebase {
                 System.out.println("onCancelled");
             }
         });
+    }
+
+    private void onEventFirebase(DataSnapshot snap) {
+        EventFirebase efb = snap.getValue(EventFirebase.class);
+        if(efb != null) {
+            for (Event event : assetLoaderStatic.getEvents()) {
+                if (eventPrefix(event.recordid).equals(efb.getRecordid())) {
+                    event.eventFirebase = efb;
+                }
+            }
+        } //else Database empty
+    }
+
+    private void onCourse(DataSnapshot snap) {
+        System.out.println("onCourse");
+        Course course = snap.getValue(Course.class);
+        if(course != null) {
+            System.out.println(course);
+        }
     }
 
     public void saveEventFirebase(EventFirebase efb) {
