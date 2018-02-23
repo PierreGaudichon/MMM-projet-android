@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.view.View;
 import android.widget.RadioButton;
@@ -180,10 +181,21 @@ public class MainActivity extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(name));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) {
+                hideKeyboard();
+                if(mMapFragment.isVisible()){
+                    eventListOnMapReady.handleSearchSubmit();
+                }
                 return true;
             }
             @Override public boolean onQueryTextChange(String query) {
-                assetLoader.setQuery((query == "") ? null : query);
+                if(query.isEmpty()) {
+                    assetLoader.setQuery(null);
+                    if (mMapFragment.isVisible()) {
+                        eventListOnMapReady.handleSearchSubmit();
+                    }
+                }else {
+                    assetLoader.setQuery(query);
+                }
                 eventList.setEventList(getAssetLoader().getEvents());
                 return true;
             }
@@ -202,6 +214,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.toolbar_share).setVisible(isSharable);
         return true;
+    }
+
+    public void hideKeyboard(){
+        // Check if no view has focus:
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
     }
 
 
