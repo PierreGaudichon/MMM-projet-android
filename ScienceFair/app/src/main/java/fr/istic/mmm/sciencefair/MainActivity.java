@@ -46,11 +46,8 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private Toolbar toolbar;
-    private DatabaseReference myRef ;
-    private FirebaseDatabase database ;
     private AssetLoaderStatic assetLoaderStatic;
     private AssetLoaderFirebase assetLoaderFirebase;
-    private GoogleMap mMap;
 
     private MapFragment mMapFragment;
     private EventList eventList;
@@ -84,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
         assetLoaderFirebase = new AssetLoaderFirebase(assetLoaderStatic);
-        myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
@@ -103,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
         showEventList();
     }
 
-    public DatabaseReference getDatabase(){
-        return myRef ;
-    }
 
     /*
      * ------------------------------------------------------------------------
@@ -202,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.toolbar_map) { showMap(); }
         if(item.getItemId() == R.id.toolbar_list) { showEventList(); }
         if(item.getItemId() == R.id.toolbar_share) { eventDetails.share(); }
+        if(item.getItemId() == R.id.toolbar_manager) { eventDetails.setManager(); }
         if(item.getItemId() == R.id.toolbar_course) { showCourseList(); }
         return true;
     }
@@ -209,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.toolbar_share).setVisible(isSharable);
+        menu.findItem(R.id.toolbar_manager).setVisible(eventDetails.isVisible());
         return true;
     }
 
@@ -357,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
         return assetLoaderStatic;
     }
 
-
-
+    public AssetLoaderFirebase getAssetLoaderFirebase() {
+        return assetLoaderFirebase;
+    }
 }
