@@ -32,8 +32,8 @@
         android:title="Share"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/action_settings"
-        android:title="Settings"
+    <item android:id="@+id/toolbar_manager"
+        android:title="Manager"
         app:showAsAction="never"/>
 
 </menu>
