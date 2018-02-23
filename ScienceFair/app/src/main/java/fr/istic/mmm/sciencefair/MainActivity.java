@@ -27,6 +27,9 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.*;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.istic.mmm.sciencefair.data.Course;
 import fr.istic.mmm.sciencefair.data.Event;
 import fr.istic.mmm.sciencefair.data.EventFirebase;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isSharable;
 
     private Course course;
+    private List<Course> courses;
 
 
     /*
@@ -80,11 +84,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
-        assetLoaderFirebase = new AssetLoaderFirebase(assetLoaderStatic);
+        assetLoaderFirebase = new AssetLoaderFirebase(this, assetLoaderStatic);
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
         course = new Course();
+        courses = new ArrayList<>();
 
         eventList = new EventList();
         eventList.setEventList(getAssetLoaderStatic().getEvents());
@@ -323,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
      * ------------------------------------------------------------------------
      */
 
+    // When an event is added to current course.
     public void addToCourse(Event event) {
         System.out.println("AddToCourse : " + event.recordid);
         course.add(event);
@@ -347,6 +353,17 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    // when a course is retrieved from server.
+    public void addCourse(Course course) {
+        System.out.println("MainActivity#addCourse");
+        if(!course.isInList(courses)) {
+            course.populateEvents(getAssetLoaderStatic().getEvents());
+            courses.add(course);
+            courseList.setCourseList(courses);
+            System.out.println(courses.size());
+        }
     }
 
 

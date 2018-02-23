@@ -12,6 +12,7 @@ public class Course {
 
     private String courseid;
     private List<Event> events;
+    private List<String> recordids;
     private String name;
 
     public Course() {
@@ -34,12 +35,19 @@ public class Course {
         return events;
     }
 
-    public List<String> getRecordids() {
-        List<String> result = new ArrayList<>();
-        for(Event event : events) { result.add(event.recordid); }
-        return result;
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
+    public List<String> getRecordids() {
+        return recordids;
+    }
+
+    public void setRecordids(List<String> recordids) {
+        this.recordids = recordids;
+    }
+
+    public void setCourseid(String courseid) { this.courseid = courseid; }
     public String getCourseid() {
         return courseid;
     }
@@ -47,8 +55,34 @@ public class Course {
     public void setName(String name) {
         this.name = name;
     }
-
     public String getName() {
         return name;
+    }
+
+    public void populateEvents(List<Event> events) {
+        events = new ArrayList<>();
+        if(recordids != null) {
+            for(String recordid : recordids) {
+                for(Event event : events) {
+                    if(event.recordid == recordid) {
+                        events.add(event);
+                    }
+                }
+            }
+        }
+    }
+
+    public void populateRecordids() {
+        recordids = new ArrayList<>();
+        for(Event event : events) { recordids.add(event.recordid); }
+    }
+
+    public boolean isInList(List<Course> courses) {
+        for(Course course : courses) {
+            if(course.courseid == courseid) {
+                return true;
+            }
+        }
+        return false;
     }
 }

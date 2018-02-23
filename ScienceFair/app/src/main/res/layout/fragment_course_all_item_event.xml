@@ -5,15 +5,9 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/event"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
-    <ListView
-        android:id="@+id/events"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:paddingRight="20dp" />
 
 </LinearLayout>

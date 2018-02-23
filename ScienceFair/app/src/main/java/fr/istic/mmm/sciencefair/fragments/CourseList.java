@@ -49,6 +49,7 @@ public class CourseList extends Fragment {
         RecyclerView allList = view.findViewById(R.id.course_all_list);
         allList.setLayoutManager(new LinearLayoutManager(getActivity()));
         coursesAdapter = new AllCourseAdapter(activity, courses);
+        if(courses != null) { coursesAdapter.setList(courses); }
         allList.setAdapter(coursesAdapter);
 
         return view;
@@ -60,6 +61,9 @@ public class CourseList extends Fragment {
     }
 
     public void setCourseList(List<Course> courses){
+        System.out.println("CourseList#setCourseList");
+        System.out.print("coursesAdapter != null = ");
+        System.out.println(coursesAdapter != null);
         this.courses = courses;
         if(coursesAdapter != null) { coursesAdapter.setList(courses); }
     }

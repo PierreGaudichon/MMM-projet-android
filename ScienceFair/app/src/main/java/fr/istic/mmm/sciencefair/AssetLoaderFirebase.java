@@ -23,11 +23,13 @@ public class AssetLoaderFirebase {
     public static final boolean isEvent(String id) { return id.contains("event-"); }
     public static final boolean isCourse(String id) { return id.contains("course-"); }
 
+    private MainActivity activity;
     private AssetLoaderStatic assetLoaderStatic;
     private FirebaseDatabase database;
     private DatabaseReference sciencefair;
 
-    public AssetLoaderFirebase(AssetLoaderStatic assetLoaderStatic) {
+    public AssetLoaderFirebase(MainActivity activity, AssetLoaderStatic assetLoaderStatic) {
+        this.activity = activity;
         this.assetLoaderStatic = assetLoaderStatic;
         this.database = FirebaseDatabase.getInstance();
         this.sciencefair = database.getReference();
@@ -60,10 +62,10 @@ public class AssetLoaderFirebase {
     }
 
     private void onCourse(DataSnapshot snap) {
-        System.out.println("onCourse");
+        System.out.println("AssetLoaderFirebase#onCourse");
         Course course = snap.getValue(Course.class);
         if(course != null) {
-            System.out.println(course);
+            activity.addCourse(course);
         }
     }
 
@@ -72,7 +74,9 @@ public class AssetLoaderFirebase {
     }
 
     public void saveCourse(Course course) {
+        System.out.println("Save course.");
         System.out.println(course.getCourseid());
+        course.populateRecordids();
         sciencefair.child(coursePrefix(course.getCourseid())).setValue(course);
     }
 }

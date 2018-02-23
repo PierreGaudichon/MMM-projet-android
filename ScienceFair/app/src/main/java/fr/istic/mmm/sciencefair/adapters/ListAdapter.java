@@ -44,6 +44,7 @@ public abstract class ListAdapter<T> extends RecyclerView.Adapter<ListAdapter.Vi
 
     public void setList(List<T> list) {
         this.list = list;
+        System.out.println(list);
         notifyDataSetChanged();
     }
 
