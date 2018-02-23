@@ -9,21 +9,32 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 import fr.istic.mmm.sciencefair.data.Event;
+import fr.istic.mmm.sciencefair.data.EventFirebase;
 
 public class AssetLoaderFirebase {
+
+    public static final String eventPrefix(String recordid) {
+        return "event-" + recordid;
+    }
+
+    private AssetLoaderStatic assetLoaderStatic;
     private FirebaseDatabase database;
     private DatabaseReference sciencefair;
 
-    public AssetLoaderFirebase() {
-        database = FirebaseDatabase.getInstance();
-        sciencefair = database.getReference();
-        // Read from the database
+    public AssetLoaderFirebase(AssetLoaderStatic assetLoaderStatic) {
+        this.assetLoaderStatic = assetLoaderStatic;
+        this.database = FirebaseDatabase.getInstance();
+        this.sciencefair = database.getReference();
+
         sciencefair.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Event event = dataSnapshot.getValue(Event.class);
-                System.out.println("onDataChange");
-                System.out.println(event);
+                EventFirebase efb = dataSnapshot.getValue(EventFirebase.class);
+                for(Event event : assetLoaderStatic.getEvents()) {
+                    if(eventPrefix(event.recordid) == efb.recordid) {
+                        event.eventFirebase = efb;
+                    }
+                }
             }
 
             @Override
@@ -33,7 +44,7 @@ public class AssetLoaderFirebase {
         });
     }
 
-    private void loadData() {
-
+    public void saveEventFirebase(EventFirebase efb) {
+        sciencefair.child(eventPrefix(efb.recordid)).setValue(efb);
     }
 }

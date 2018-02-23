@@ -28,6 +28,7 @@ import com.google.firebase.database.*;
 import com.google.firebase.database.FirebaseDatabase;
 
 import fr.istic.mmm.sciencefair.data.Event;
+import fr.istic.mmm.sciencefair.data.EventFirebase;
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
 import fr.istic.mmm.sciencefair.fragments.EventList;
 import fr.istic.mmm.sciencefair.map.EventListOnMapReady;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
-        assetLoaderFirebase = new AssetLoaderFirebase();
+        assetLoaderFirebase = new AssetLoaderFirebase(assetLoaderStatic);
         myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         showEventList();
         /*logEvent(eventDetails.getView());*/
+
     }
 
     public DatabaseReference getDatabase(){
