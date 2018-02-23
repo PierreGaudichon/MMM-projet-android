@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initializeFirebase(){
-        
+
     }
     public FirebaseAnalytics getmFirebaseAnalytics(){
         return mFirebaseAnalytics;
