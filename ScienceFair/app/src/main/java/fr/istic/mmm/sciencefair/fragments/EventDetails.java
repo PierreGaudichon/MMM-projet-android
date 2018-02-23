@@ -54,7 +54,9 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
         super.onResume();
         if(event != null) {
             ((TextView) view.findViewById(R.id.event_title)).setText(event.fields.titre_fr);
-            ((TextView) view.findViewById(R.id.event_description)).setText(event.fields.description_longue_fr);
+            String desc = (event.fields.description_longue_fr != null) ?
+                    event.fields.description_longue_fr : event.fields.description_fr;
+            ((TextView) view.findViewById(R.id.event_description)).setText(desc);
             Picasso.with(getContext()).load(event.fields.image).into((ImageView) view.findViewById(R.id.event_image));
         }
     }
