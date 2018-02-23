@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
+        assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.SMALL);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         eventListOnMapReady = new EventListOnMapReady(this, locationManager, eventList);
 
         showEventList();
+        Test.test();
         /*logEvent(eventDetails.getView());*/
     }
 

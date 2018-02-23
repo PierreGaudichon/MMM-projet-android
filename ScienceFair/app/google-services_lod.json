@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "752749310119",
+    "firebase_url": "https://sciencefair-32c7e.firebaseio.com",
+    "project_id": "sciencefair-32c7e",
+    "storage_bucket": "sciencefair-32c7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752749310119:android:ee4e87ad4f086c97",
+        "android_client_info": {
+          "package_name": "fr.istic.mmm.sciencefair"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752749310119-bo5u5ak5p7s6ika8109dmqdfc5ercmh3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.istic.mmm.sciencefair",
+            "certificate_hash": "493e1fcddc5ae0b0b9a46d74f94a89197c08fc25"
+          }
+        },
+        {
+          "client_id": "752749310119-7v6p1b5spveq66hbc1nm75d57247p341.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxgzWjoSvZXgwqZjE3DixkASfb11o8V-o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752749310119-7v6p1b5spveq66hbc1nm75d57247p341.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
