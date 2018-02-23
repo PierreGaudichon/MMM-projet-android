@@ -10,12 +10,12 @@ import java.util.UUID;
 
 public class Course {
 
-    private UUID courseid;
+    private String courseid;
     private List<Event> events;
     private String name;
 
     public Course() {
-        courseid = UUID.randomUUID();
+        courseid = UUID.randomUUID().toString();
         events = new ArrayList<>();
     }
 
@@ -41,7 +41,7 @@ public class Course {
     }
 
     public String getCourseid() {
-        return courseid.toString();
+        return courseid;
     }
 
     public void setName(String name) {
