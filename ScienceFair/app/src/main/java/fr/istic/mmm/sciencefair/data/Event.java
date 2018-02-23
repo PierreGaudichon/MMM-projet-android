@@ -22,6 +22,7 @@ public class Event {
         public String description_longue_fr;
         public String lien;
         public double[] geolocalisation;
+        public String image;
     }
 
     public LatLng location;
