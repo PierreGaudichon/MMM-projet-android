@@ -61,9 +61,11 @@ public class AssetLoader {
             return events;
         } else {
             List<Event> result = new ArrayList<>();
-            for(Event e : events) {
-                if(e.fields.titre_fr.contains(query)) {
-                    result.add(e);
+            for(Event event : events) {
+                String title = event.fields.titre_fr.toLowerCase();
+                String q = query.toLowerCase();
+                if(title.contains(q)) {
+                    result.add(event);
                 }
             }
             return result;
