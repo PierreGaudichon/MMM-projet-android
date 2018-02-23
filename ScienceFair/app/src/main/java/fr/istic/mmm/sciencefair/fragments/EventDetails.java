@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +43,7 @@ public class EventDetails extends Fragment  {
                 (view) -> {
                     event.eventFirebase.remaining = np.getValue();
                     activity.getAssetLoaderFirebase().saveEventFirebase(event.eventFirebase);
+                    Toast.makeText(activity, "Remaining places set to " + event.eventFirebase.remaining, 2).show();
                 });
         view.findViewById(R.id.event_course).setOnClickListener(v -> {
             activity.addToCourse(event);
@@ -128,8 +130,6 @@ public class EventDetails extends Fragment  {
         assetLoaderFirebase.saveEventFirebase(event.eventFirebase);
         ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
         view.findViewById(R.id.rateButton).setEnabled(false);
-
-
     }
 
     public void setManager() {
