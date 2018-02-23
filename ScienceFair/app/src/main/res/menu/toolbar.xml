@@ -21,6 +21,12 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/toolbar_course"
+        android:icon="@drawable/ic_explore_black_24dp"
+        android:title="Courses"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/toolbar_share"
         android:icon="@drawable/ic_share_black_24dp"
         android:title="Share"

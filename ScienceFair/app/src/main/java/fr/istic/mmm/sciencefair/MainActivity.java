@@ -315,6 +315,23 @@ public class MainActivity extends AppCompatActivity {
     /*
      * ------------------------------------------------------------------------
      *
+     * COURSES
+     *
+     * ------------------------------------------------------------------------
+     */
+
+    public void addToCourse(int position) {
+        System.out.println("AddToCourse : " + position);
+    }
+
+    public void removeFromCourse(int position) {
+        System.out.println("RemoveFromCourse : " + position);
+    }
+
+
+    /*
+     * ------------------------------------------------------------------------
+     *
      * GETTERS - SETTERS
      *
      * ------------------------------------------------------------------------
@@ -323,4 +340,7 @@ public class MainActivity extends AppCompatActivity {
     public AssetLoaderStatic getAssetLoaderStatic() {
         return assetLoaderStatic;
     }
+
+
+
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
 
     private View view;
     private MainActivity activity;
+    private int position;
     private Event event;
     private TransportMode transportMode = TransportMode.DRIVE;
 
@@ -26,12 +28,14 @@ public class EventDetails extends Fragment  { /*implements View.OnClickListener*
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_event_details, container, false);
         activity = ((MainActivity) getActivity());
-        /*//Firebase
-        view.findViewById(R.id.event_score).setOnClickListener(this);*/
+        ((Button) view.findViewById(R.id.event_course)).setOnClickListener(v -> {
+            activity.addToCourse(position);
+        });
         return view;
     }
 
     public void setPos(int position) {
+        this.position = position;
         setEvent(activity.getAssetLoaderStatic().getEvents().get(position));
     }
 
