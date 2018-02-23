@@ -29,12 +29,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         //super(ctx, R.layout.fragment_event_details, list);
         this.ctx = ctx;
         this.list = list;
-        for (Event event :
-                list) {
-            if(!event.hasGeolocalisation()){
-                System.out.println("event.fields.titre_fr = " + event.fields.titre_fr);
-            }
-        }
     }
 
     @Override
