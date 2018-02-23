@@ -32,6 +32,14 @@ import fr.istic.mmm.sciencefair.map.EventListOnMapReady;
 
 public class MainActivity extends AppCompatActivity {
 
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * ATTRIBUTES
+     *
+     * ------------------------------------------------------------------------
+     */
+
     private Toolbar toolbar;
     private FirebaseAnalytics mFirebaseAnalytics;
     private AssetLoader assetLoader;
@@ -46,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFirst = true;
     private boolean isSharable;
 
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * ON_CREATE
+     *
+     * ------------------------------------------------------------------------
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        assetLoader = new AssetLoader(getAssets(), AssetLoader.BIG);
+        assetLoader = new AssetLoader(getAssets(), AssetLoader.MEDIUM);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         toolbar = findViewById(R.id.toolbar_main);
@@ -69,11 +86,19 @@ public class MainActivity extends AppCompatActivity {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         eventListOnMapReady = new EventListOnMapReady(this, locationManager, eventList);
 
-        handleIntent(getIntent());
         showEventList();
         initializeFirebase();
         /*logEvent(eventDetails.getView());*/
     }
+
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * FIREBASE
+     *
+     * ------------------------------------------------------------------------
+     */
 
     public void initializeFirebase(){
 
@@ -89,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
         bundle.putLong(FirebaseAnalytics.Param.SCORE, 5);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.POST_SCORE, bundle);
     }*/
+
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * SHOW_FRAGMENTS
+     *
+     * ------------------------------------------------------------------------
+     */
 
     public void showEventList() {
         isSharable = false;
@@ -127,6 +161,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * MENU
+     *
+     * ------------------------------------------------------------------------
+     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar, menu);
@@ -135,6 +178,16 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.toolbar_search).getActionView();
         ComponentName name = new ComponentName(getApplicationContext(), MainActivity.class);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(name));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+            @Override public boolean onQueryTextChange(String query) {
+                assetLoader.setQuery((query == "") ? null : query);
+                eventList.setEventList(getAssetLoader().getEvents());
+                return true;
+            }
+        });
         return true;
     }
 
@@ -151,11 +204,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * INTENT - SEARCH
+     *
+     * ------------------------------------------------------------------------
+     */
+
+    //DEPRECIATED, do not remove from codebase.
+    @Override protected void onNewIntent(Intent intent) {
         handleIntent(intent);
     }
 
+    // DEPRECIATED, do not remove from codebase.
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
@@ -167,13 +230,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public AssetLoader getAssetLoader() {
-        return assetLoader;
-    }
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * MAP
+     *
+     * ------------------------------------------------------------------------
+     */
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                              int[] grantResults){
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
         for(int i = 0; i < permissions.length; i++){
             if(permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[i] == -1) {
                 //TODO better exit
@@ -228,5 +295,18 @@ public class MainActivity extends AppCompatActivity {
                     eventDetails.setTransportMode(EventDetails.TransportMode.BIKE);
                     break;
         }
+    }
+
+
+    /*
+     * ------------------------------------------------------------------------
+     *
+     * GETTERS - SETTERS
+     *
+     * ------------------------------------------------------------------------
+     */
+
+    public AssetLoader getAssetLoader() {
+        return assetLoader;
     }
 }

@@ -36,6 +36,7 @@ public class EventList extends Fragment {
     private MainActivity activity;
     private RecyclerView list;
     private List<Event> events;
+    private EventListAdapter adapter;
 
     public List<Event> getEvents() {
         return events;
@@ -43,6 +44,7 @@ public class EventList extends Fragment {
 
     public void setEventList(List<Event> eventList){
         this.events = eventList;
+        if(adapter != null) { adapter.setList(eventList); }
     }
 
     @Override
@@ -51,7 +53,8 @@ public class EventList extends Fragment {
         activity = ((MainActivity) getActivity());
         list = view.findViewById(R.id.event_list);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list.setAdapter(new EventListAdapter(activity, events));
+        adapter = new EventListAdapter(activity, events);
+        list.setAdapter(adapter);
         return view;
     }
 }

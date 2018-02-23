@@ -52,4 +52,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     public int getItemCount() {
         return list.size();
     }
+
+    public void setList(List<Event> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
 }
