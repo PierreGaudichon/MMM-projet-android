@@ -16,17 +16,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.SearchView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.* ;
+import com.google.firebase.database.*;
+import com.google.firebase.firebase_core.*;
+import com.google.firebase.database.FirebaseDatabase;
 
 import fr.istic.mmm.sciencefair.data.Event;
-import fr.istic.mmm.sciencefair.fragments.*;
+import fr.istic.mmm.sciencefair.fragments.EventDetails;
 import fr.istic.mmm.sciencefair.fragments.EventList;
 import fr.istic.mmm.sciencefair.map.EventListOnMapReady;
 
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private DatabaseReference myRef ;
+    private FirebaseDatabase database ;
     private AssetLoader assetLoader;
     private GoogleMap mMap;
 
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         assetLoader = new AssetLoader(getAssets(), AssetLoader.BIG);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
+        myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
@@ -71,15 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         handleIntent(getIntent());
         showEventList();
-        initializeFirebase();
         /*logEvent(eventDetails.getView());*/
-    }
-
-    public void initializeFirebase(){
-
-    }
-    public FirebaseAnalytics getmFirebaseAnalytics(){
-        return mFirebaseAnalytics;
     }
 
 /*    public void logEvent(View view){
