@@ -12,4 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
+    <EditText
+        android:id="@+id/course_name"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/course_commit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

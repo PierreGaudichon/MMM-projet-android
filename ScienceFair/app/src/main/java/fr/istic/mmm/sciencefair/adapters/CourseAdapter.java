@@ -19,8 +19,8 @@ public class CourseAdapter extends ListAdapter {
     public void onBindViewHolder(ViewHolder holder, int position) {
         Event event = list.get(position);
         ((TextView) holder.view.findViewById(R.id.titre)).setText(event.fields.titre_fr);
-        holder.view.setOnClickListener(l -> {
-            ((MainActivity) ctx).removeFromCourse(position);
+        holder.view.findViewById(R.id.remove).setOnClickListener(l -> {
+            ((MainActivity) ctx).removeFromCourse(event);
         });
     }
 

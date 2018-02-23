@@ -27,8 +27,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.*;
 import com.google.firebase.database.FirebaseDatabase;
 
+import fr.istic.mmm.sciencefair.data.Course;
 import fr.istic.mmm.sciencefair.data.Event;
 import fr.istic.mmm.sciencefair.data.EventFirebase;
+import fr.istic.mmm.sciencefair.fragments.CourseList;
 import fr.istic.mmm.sciencefair.fragments.EventDetails;
 import fr.istic.mmm.sciencefair.fragments.EventList;
 import fr.istic.mmm.sciencefair.map.EventListOnMapReady;
@@ -52,12 +54,15 @@ public class MainActivity extends AppCompatActivity {
 
     private MapFragment mMapFragment;
     private EventList eventList;
+    private CourseList courseList;
     private EventDetails eventDetails;
     private LocationManager locationManager;
     private EventListOnMapReady eventListOnMapReady;
 
     private boolean isFirst = true;
     private boolean isSharable;
+
+    private Course course;
 
 
     /*
@@ -83,8 +88,12 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
+        course = new Course();
+
         eventList = new EventList();
         eventList.setEventList(getAssetLoaderStatic().getEvents());
+        courseList = new CourseList();
+        courseList.setEventList(course.getEvents());
         eventDetails = new EventDetails();
         mMapFragment = MapFragment.newInstance();
 
@@ -138,6 +147,11 @@ public class MainActivity extends AppCompatActivity {
         isSharable = false;
         showFullFragment(mMapFragment);
         mMapFragment.getMapAsync(eventListOnMapReady);
+    }
+
+    public void showCourseList() {
+        isSharable = true;
+        showFullFragment(courseList);
     }
 
     private void showFullFragment(Fragment fragment) {
@@ -199,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.toolbar_map) { showMap(); }
         if(item.getItemId() == R.id.toolbar_list) { showEventList(); }
         if(item.getItemId() == R.id.toolbar_share) { eventDetails.share(); }
+        if(item.getItemId() == R.id.toolbar_course) { showCourseList(); }
         return true;
     }
 
@@ -311,27 +326,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.driveRadioButton:
-                if (checked)
-                    eventDetails.setTransportMode(EventDetails.TransportMode.DRIVE);
-                break;
-            case R.id.walkRadioButton:
-                if (checked)
-                    eventDetails.setTransportMode(EventDetails.TransportMode.WALK);
-                break;
-            case R.id.bikeRadioButton:
-                if (checked)
-                    eventDetails.setTransportMode(EventDetails.TransportMode.BIKE);
-                break;
-        }
-    }
-
 
     /*
      * ------------------------------------------------------------------------
@@ -341,12 +335,20 @@ public class MainActivity extends AppCompatActivity {
      * ------------------------------------------------------------------------
      */
 
-    public void addToCourse(int position) {
-        System.out.println("AddToCourse : " + position);
+    public void addToCourse(Event event) {
+        System.out.println("AddToCourse : " + event.recordid);
+        course.add(event);
+        courseList.setEventList(course.getEvents());
     }
 
-    public void removeFromCourse(int position) {
-        System.out.println("RemoveFromCourse : " + position);
+    public void removeFromCourse(Event event) {
+        System.out.println("RemoveFromCourse : " + event.recordid);
+        course.remove(event);
+        courseList.setEventList(course.getEvents());
+    }
+
+    public void addNameToCourse(String name) {
+        course.setName(name);
     }
 
 

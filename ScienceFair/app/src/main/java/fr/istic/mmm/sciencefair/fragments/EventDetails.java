@@ -30,7 +30,7 @@ public class EventDetails extends Fragment  {
         view = inflater.inflate(R.layout.fragment_event_details, container, false);
         activity = ((MainActivity) getActivity());
         ((Button) view.findViewById(R.id.event_course)).setOnClickListener(v -> {
-            activity.addToCourse(position);
+            activity.addToCourse(event);
         });
         return view;
     }
@@ -60,7 +60,7 @@ public class EventDetails extends Fragment  {
             Picasso.with(getContext()).load(event.fields.image).into((ImageView) view.findViewById(R.id.event_image));
             //Rating initialise with EventFirebase
             if(event.eventFirebase != null){
-                ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
+                ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.getRating());
             }
         }
     }
