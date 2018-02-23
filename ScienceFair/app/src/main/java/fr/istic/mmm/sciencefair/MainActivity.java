@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private Toolbar toolbar;
-    private FirebaseAnalytics mFirebaseAnalytics;
     private DatabaseReference myRef ;
     private FirebaseDatabase database ;
     private AssetLoaderStatic assetLoaderStatic;
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
         assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
         assetLoaderFirebase = new AssetLoaderFirebase();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         myRef = FirebaseDatabase.getInstance().getReference() ;
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
