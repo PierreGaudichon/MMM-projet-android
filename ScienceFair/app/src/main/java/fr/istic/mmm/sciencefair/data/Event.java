@@ -24,6 +24,7 @@ public class Event {
         public String lien;
         public double[] geolocalisation;
         public String image;
+        public String apercu;
     }
 
     private Observer observer;

@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         eventListOnMapReady = new EventListOnMapReady(this, locationManager, eventList);
 
         showEventList();
+
     }
 
 

@@ -2,11 +2,11 @@ package fr.istic.mmm.sciencefair.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +32,11 @@ public class EventListAdapter extends ListAdapter<Event> implements Observer{
         applyColor(event, holder);
         ((TextView) holder.view.findViewById(R.id.titre)).setText(event.fields.titre_fr);
         ((TextView) holder.view.findViewById(R.id.description)).setText(event.fields.description_fr);
+        if(event.fields.apercu != null) {
+            Picasso.with(ctx).load(event.fields.apercu).into((ImageView) holder.view.findViewById(R.id.card_image));
+        }else{
+            holder.view.findViewById(R.id.card_image).setVisibility(View.GONE);
+        }
         holder.view.setOnClickListener(l -> ((MainActivity) ctx).showEventDetails(position));
         eventToViewHolder.put(event, holder);
     }
