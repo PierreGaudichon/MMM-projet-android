@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -331,7 +332,11 @@ public class MainActivity extends AppCompatActivity {
     // When an event is added to current course.
     public void addToCourse(Event event) {
         System.out.println("AddToCourse : " + event.recordid);
-        course.add(event);
+        if(course.add(event)) {
+            Toast.makeText(this, "Event added to course.", 2).show();
+        } else {
+            Toast.makeText(this, "Event already in course.", 2).show();
+        }
         courseList.setEventList(course.getEvents());
     }
 
@@ -346,11 +351,14 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(course.getEvents().size() > 0);
         System.out.println(name != "");
         if((course.getEvents().size() > 0) && (name != "")) {
+            Toast.makeText(this, "Course published.", 2).show();
             course.setName(name);
             assetLoaderFirebase.saveCourse(course);
             course = new Course();
             courseList.setEventList(course.getEvents());
             return true;
+        } else {
+            Toast.makeText(this, "Course not published (add at least an event and a name).", 2).show();
         }
         return false;
     }

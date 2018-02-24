@@ -20,9 +20,12 @@ public class Course {
         events = new ArrayList<>();
     }
 
-    public void add(Event event) {
+    public boolean add(Event event) {
         if(!events.contains(event)) {
             events.add(event);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -59,12 +62,17 @@ public class Course {
         return name;
     }
 
-    public void populateEvents(List<Event> events) {
+    public void populateEvents(List<Event> allEvents) {
+        System.out.println("Course#populateEvents");
+        System.out.println("recordids.length = " + recordids.size());
+        System.out.println("allEvents.size() = " + allEvents.size());
         events = new ArrayList<>();
         if(recordids != null) {
             for(String recordid : recordids) {
-                for(Event event : events) {
-                    if(event.recordid == recordid) {
+                System.out.println("recordid = " + recordid);
+                for(Event event : allEvents) {
+                    if(event.recordid.equals(recordid)) {
+                        System.out.println("added");
                         events.add(event);
                     }
                 }

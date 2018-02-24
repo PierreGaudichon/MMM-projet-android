@@ -30,14 +30,17 @@ public class CourseList extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("CourseList#onCreateView#begin");
         view = inflater.inflate(R.layout.fragment_course_list, container, false);
         activity = ((MainActivity) getActivity());
 
+        System.out.println("CourseList#onCreateView#eventListAdapter");
         RecyclerView myList = view.findViewById(R.id.course_my_list);
         myList.setLayoutManager(new LinearLayoutManager(getActivity()));
         eventAdapter = new MyCourseAdapter(activity, events);
         myList.setAdapter(eventAdapter);
 
+        System.out.println("CourseList#onCreateView#button");
         ((Button) view.findViewById(R.id.course_publish)).setOnClickListener(v -> {
             String name = ((EditText) view.findViewById(R.id.course_name)).getText().toString();
             boolean published = activity.publishCourse(name);
@@ -46,6 +49,8 @@ public class CourseList extends Fragment {
             }
         });
 
+        System.out.println("CourseList#onCreateView#courseAdapter");
+        System.out.println("courses.size() = " + courses.size());
         RecyclerView allList = view.findViewById(R.id.course_all_list);
         allList.setLayoutManager(new LinearLayoutManager(getActivity()));
         coursesAdapter = new AllCourseAdapter(activity, courses);

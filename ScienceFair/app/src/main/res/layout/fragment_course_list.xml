@@ -8,14 +8,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My course"/>
+        android:text="My course"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_my_list"
         android:scrollbars="vertical"
-        android:layout_weight="2"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/course_name"
@@ -33,13 +34,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="All courses"/>
+        android:text="All courses"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_all_list"
-        android:scrollbars="vertical"
-        android:layout_weight="2"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
 
 </LinearLayout>
