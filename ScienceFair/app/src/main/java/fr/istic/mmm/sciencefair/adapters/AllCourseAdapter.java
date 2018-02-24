@@ -29,12 +29,9 @@ public class AllCourseAdapter extends ListAdapter<Course> {
         System.out.println(holder.view.findViewById(R.id.name));
         ((TextView) holder.view.findViewById(R.id.name)).setText(course.getName());
 
-        List<String> titles = new ArrayList<>();
-        for(Event e : course.getEvents()) { titles.add(e.fields.titre_fr); }
-        System.out.println(titles);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(ctx, R.layout.fragment_course_all_item_event, titles);
-        System.out.println("adapter.getCount() = " + adapter.getCount());
-        ((ListView) holder.view.findViewById(R.id.events)).setAdapter(adapter);
+        String titles = "";
+        for(Event e : course.getEvents()) { titles += e.fields.titre_fr + "\n"; }
+        ((TextView) holder.view.findViewById(R.id.events)).setText(titles);
     }
 
     @Override
