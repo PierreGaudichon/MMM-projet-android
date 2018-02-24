@@ -8,13 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
 import fr.istic.mmm.sciencefair.data.Event;
 
-public class EventListAdapter extends ListAdapter<Event> {
+public class EventListAdapter extends ListAdapter<Event> implements Observer{
+
+    private Map<Event, ViewHolder> eventToViewHolder = new HashMap<>();
 
     public EventListAdapter(Context ctx, List<Event> list) {
         super(ctx, list);
@@ -23,22 +29,37 @@ public class EventListAdapter extends ListAdapter<Event> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Event event = list.get(position);
-        int color = Color.rgb(115, 224, 65);
-        if ((event.eventFirebase != null && event.eventFirebase.remaining == -1) || event.eventFirebase == null){
-            color = Color.rgb(255, 142, 43);
-        }else if(event.eventFirebase.remaining < 5) {
-            color = Color.rgb(226, 49, 22);
-        }
-        ((TextView) holder.view.findViewById(R.id.titre)).setTextColor(color);
+        applyColor(event, holder);
         ((TextView) holder.view.findViewById(R.id.titre)).setText(event.fields.titre_fr);
         ((TextView) holder.view.findViewById(R.id.description)).setText(event.fields.description_fr);
-        holder.view.setOnClickListener(l -> {
-            ((MainActivity) ctx).showEventDetails(position);
-        });
+        holder.view.setOnClickListener(l -> ((MainActivity) ctx).showEventDetails(position));
+        eventToViewHolder.put(event, holder);
     }
 
     @Override
     public int inflateId() {
         return R.layout.fragment_event_list_item;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(arg instanceof Event){
+            ViewHolder holder = eventToViewHolder.get(arg);
+            if(holder != null) {
+               applyColor((Event) arg, holder);
+            }
+        }
+    }
+
+    private void applyColor(Event event, ViewHolder holder){
+        int color = Color.rgb(115, 224, 65); // GREEN
+        if ((event.getEventFirebase() != null && event.getEventFirebase().remaining == -1) || event.getEventFirebase() == null) {
+            color = Color.rgb(114, 114, 114); // GREY
+        }else if(event.getEventFirebase().remaining <= 0){
+            color = Color.rgb(226, 49, 22); // RED
+        } else if (event.getEventFirebase().remaining < 5) {
+            color = Color.rgb(255, 142, 43); // ORANGE
+        }
+        ((TextView) holder.view.findViewById(R.id.titre)).setTextColor(color);
     }
 }

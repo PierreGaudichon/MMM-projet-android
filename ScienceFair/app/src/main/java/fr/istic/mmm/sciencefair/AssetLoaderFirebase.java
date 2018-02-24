@@ -37,6 +37,7 @@ public class AssetLoaderFirebase {
         sciencefair.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("AssetLoaderFirebase.onDataChange");
                 for(DataSnapshot snap : dataSnapshot.getChildren()) {
                     if(isEvent(snap.getKey())) { onEventFirebase(snap); }
                     if(isCourse(snap.getKey())) { onCourse(snap); }
@@ -55,7 +56,7 @@ public class AssetLoaderFirebase {
         if(efb != null) {
             for (Event event : assetLoaderStatic.getEvents()) {
                 if (event.recordid.equals(efb.recordid)) {
-                    event.eventFirebase = efb;
+                    event.setEventFirebase(efb);
                 }
             }
         } //else Database empty

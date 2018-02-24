@@ -41,9 +41,9 @@ public class EventDetails extends Fragment  {
         np.setWrapSelectorWheel(false);
         view.findViewById(R.id.applyButton).setOnClickListener(
                 (view) -> {
-                    event.eventFirebase.remaining = np.getValue();
-                    activity.getAssetLoaderFirebase().saveEventFirebase(event.eventFirebase);
-                    Toast.makeText(activity, "Remaining places set to " + event.eventFirebase.remaining, 2).show();
+                    event.getEventFirebase().remaining = np.getValue();
+                    activity.getAssetLoaderFirebase().saveEventFirebase(event.getEventFirebase());
+                    Toast.makeText(activity, "Remaining places set to " + event.getEventFirebase().remaining, Toast.LENGTH_LONG).show();
                 });
         view.findViewById(R.id.event_course).setOnClickListener(v -> {
             activity.addToCourse(event);
@@ -76,19 +76,20 @@ public class EventDetails extends Fragment  {
             Picasso.with(getContext()).load(event.fields.image).into((ImageView) view.findViewById(R.id.event_image));
             view.findViewById(R.id.rateButton).setEnabled(true);
             //Rating initialise with EventFirebase
-            if(event.eventFirebase == null) {
-                event.eventFirebase = new EventFirebase();
-                event.eventFirebase.recordid = event.recordid;
-                event.eventFirebase.nbVotes = 0;
-                event.eventFirebase.rating = 0;
-                event.eventFirebase.remaining = -1;
+            if(event.getEventFirebase() == null) {
+                EventFirebase eventFirebase = new EventFirebase();
+                eventFirebase.recordid = event.recordid;
+                eventFirebase.nbVotes = 0;
+                eventFirebase.rating = 0;
+                eventFirebase.remaining = -1;
+                event.setEventFirebase(eventFirebase);
             }
-            ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
-            if(event.eventFirebase.remaining != -1){
-                ((NumberPicker) view.findViewById(R.id.remainingPlacesNumberPicker)).setValue(this.event.eventFirebase.remaining);
+            ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.getEventFirebase().rating);
+            if(event.getEventFirebase().remaining != -1){
+                ((NumberPicker) view.findViewById(R.id.remainingPlacesNumberPicker)).setValue(this.event.getEventFirebase().remaining);
                 ((TextView) view
                         .findViewById(R.id.remainingPlacesTextView))
-                        .setText("" + event.eventFirebase.remaining);
+                        .setText("" + event.getEventFirebase().remaining);
             }else{
                 ((NumberPicker) view.findViewById(R.id.remainingPlacesNumberPicker)).setValue(0);
                 ((TextView) view.findViewById(R.id.remainingPlacesTextView)).setText("NA");
@@ -123,12 +124,12 @@ public class EventDetails extends Fragment  {
     public void setRate(AssetLoaderFirebase assetLoaderFirebase){
         event = getEvent();
         //Mis a jour de l'eventFirebase + modifier qu'une seule fois le un click
-        int nbVotesf = event.eventFirebase.nbVotes + 1;
-        event.eventFirebase.rating = (((RatingBar) view.findViewById(R.id.event_rating)).getRating() + (event.eventFirebase.rating * event.eventFirebase.nbVotes)) / nbVotesf;
-        event.eventFirebase.nbVotes = nbVotesf;
+        int nbVotesf = event.getEventFirebase().nbVotes + 1;
+        event.getEventFirebase().rating = (((RatingBar) view.findViewById(R.id.event_rating)).getRating() + (event.getEventFirebase().rating * event.getEventFirebase().nbVotes)) / nbVotesf;
+        event.getEventFirebase().nbVotes = nbVotesf;
         //save in database
-        assetLoaderFirebase.saveEventFirebase(event.eventFirebase);
-        ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.eventFirebase.rating);
+        assetLoaderFirebase.saveEventFirebase(event.getEventFirebase());
+        ((RatingBar) view.findViewById(R.id.event_rating)).setRating(event.getEventFirebase().rating);
         view.findViewById(R.id.rateButton).setEnabled(false);
     }
 
