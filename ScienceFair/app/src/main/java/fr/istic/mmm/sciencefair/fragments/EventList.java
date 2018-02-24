@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Observer;
 
 import fr.istic.mmm.sciencefair.MainActivity;
 import fr.istic.mmm.sciencefair.R;
+import fr.istic.mmm.sciencefair.adapters.ListAdapter;
 import fr.istic.mmm.sciencefair.data.Event;
 import fr.istic.mmm.sciencefair.adapters.EventListAdapter;
 
@@ -30,7 +32,9 @@ public class EventList extends Fragment {
 
     public void setEventList(List<Event> eventList){
         this.events = eventList;
-        if(adapter != null) { adapter.setList(eventList); }
+        if(adapter != null) {
+            adapter.setList(eventList);
+        }
     }
 
     @Override
@@ -41,6 +45,14 @@ public class EventList extends Fragment {
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new EventListAdapter(activity, events);
         list.setAdapter(adapter);
+        attachToEvents(adapter);
         return view;
+    }
+
+    private void attachToEvents(Observer observer){
+        for(Event event : events){
+            event.attach(observer);
+        }
+        System.out.println("EventList.attachToEvents");;
     }
 }
