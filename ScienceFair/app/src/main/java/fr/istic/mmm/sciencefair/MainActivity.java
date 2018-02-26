@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showCourseList() {
-        isSharable = true;
+        isSharable = false;
         showFullFragment(courseList);
     }
 
