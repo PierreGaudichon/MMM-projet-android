@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
+        assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.BIG);
         assetLoaderFirebase = new AssetLoaderFirebase(this, assetLoaderStatic);
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -114,6 +114,12 @@ public class MainActivity extends AppCompatActivity {
      *
      * ------------------------------------------------------------------------
      */
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        isSharable = eventDetails.isVisible();
+    }
 
     public void showEventList() {
         isSharable = false;
@@ -334,9 +340,9 @@ public class MainActivity extends AppCompatActivity {
     public void addToCourse(Event event) {
         System.out.println("AddToCourse : " + event.recordid);
         if(course.add(event)) {
-            Toast.makeText(this, "Event added to course.", 2).show();
+            Toast.makeText(this, "Event added to course.", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Event already in course.", 2).show();
+            Toast.makeText(this, "Event already in course.", Toast.LENGTH_LONG).show();
         }
         courseList.setEventList(course.getEvents());
     }
@@ -352,14 +358,14 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(course.getEvents().size() > 0);
         System.out.println(name != "");
         if((course.getEvents().size() > 0) && (name != "")) {
-            Toast.makeText(this, "Course published.", 2).show();
+            Toast.makeText(this, "Course published.", Toast.LENGTH_LONG).show();
             course.setName(name);
             assetLoaderFirebase.saveCourse(course);
             course = new Course();
             courseList.setEventList(course.getEvents());
             return true;
         } else {
-            Toast.makeText(this, "Course not published (add at least an event and a name).", 2).show();
+            Toast.makeText(this, "Course not published (add at least an event and a name).", Toast.LENGTH_LONG).show();
         }
         return false;
     }
