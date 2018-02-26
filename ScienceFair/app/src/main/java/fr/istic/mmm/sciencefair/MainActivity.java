@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.MEDIUM);
+        assetLoaderStatic = new AssetLoaderStatic(getAssets(), AssetLoaderStatic.BIG);
         assetLoaderFirebase = new AssetLoaderFirebase(this, assetLoaderStatic);
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
