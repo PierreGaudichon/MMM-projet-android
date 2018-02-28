@@ -42,6 +42,9 @@ public class EventDetails extends Fragment  {
         view.findViewById(R.id.applyButton).setOnClickListener(
                 (view) -> {
                     event.getEventFirebase().remaining = np.getValue();
+                    ((TextView) this.view
+                            .findViewById(R.id.remainingPlacesTextView))
+                            .setText("" + event.getEventFirebase().remaining);
                     activity.getAssetLoaderFirebase().saveEventFirebase(event.getEventFirebase());
                     Toast.makeText(activity, "Remaining places set to " + event.getEventFirebase().remaining, Toast.LENGTH_LONG).show();
                 });
